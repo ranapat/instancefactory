@@ -12,8 +12,10 @@ Android java library for keeping instances
 * Android SDK
 * Gradle
 
-## Building
+## Limitations
+So far we do not support construction parameters
 
+## Building
 Build tool is gradle
 
 ### Assemble
@@ -26,13 +28,13 @@ Run `./gradlew test`
 Run `./gradlew lint`
 
 ### Run jacoco tests
-Run `testDebugUnitTestCoverage`
+Run `testReleaseUnitTestCoverage`
 
 ### Outputs
 You can find the outputs here:
-- for the lint `./app/build/reports/lint-results-developmentDebug.html`
-- for the unit test coverage `./app/build/reports/jacoco/testDevelopmentDebugUnitTestCoverage/html/index.html`
-- for the unit test summary `./app/build/reports/tests/testDevelopmentDebugUnitTest/index.html`
+- for the lint `./instancefactory/build/reports/lint-results-developmentDebug.html`
+- for the unit test coverage `./instancefactory/build/reports/jacoco/testReleaseUnitTestCoverage/html/index.html`
+- for the unit test summary `./instancefactory/build/reports/tests/testReleaseUnitTestCoverage/index.html`
 
 ### Examples
 
