@@ -2,7 +2,7 @@
 
 ### Important
 
-- [ ] Implement shorter name for InstanceFactory
+- [x] Implement shorter name for InstanceFactory
 - [ ] Support construction parameters
 
 ### General:
