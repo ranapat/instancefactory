@@ -2,6 +2,10 @@
 
 Android java library for keeping instances
 
+You can keep instances of classes with or without parameters in constructors and different parameter sets will be kept separately.
+
+Class(String 'one') != Class(String 'two')
+
 ## How to get it
 
 ### Get it from jitpack
@@ -11,9 +15,6 @@ Android java library for keeping instances
 * Java 8
 * Android SDK
 * Gradle
-
-## Limitations
-So far we do not support construction parameters
 
 ## Building
 Build tool is gradle
