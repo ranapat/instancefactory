@@ -5,7 +5,7 @@ import android.util.Log;
 import org.ranapat.instancefactory.StaticallyInstantiable;
 
 @StaticallyInstantiable
-public class ClassB {
+public class ClassB implements Explainable {
     private static ClassB instance;
     public static ClassB getInstance() {
         Log.d("### DEBUG ###", "getInstance Class B (outside)");
@@ -26,6 +26,7 @@ public class ClassB {
         Log.d("### DEBUG ###", "Class B constructor " + random);
     }
 
+    @Override
     public void explain() {
         Log.d("### DEBUG ###", "Instance of Class B " + random);
     }

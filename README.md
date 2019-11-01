@@ -41,6 +41,13 @@ You can find the outputs here:
 
 ### Examples
 
+Fast access
+
+```java
+Fi.get(ClassA.class);
+// Fi instead of InstanceFactory
+```
+
 Get instance
 
 ```java
@@ -51,7 +58,7 @@ Set instance
 
 ```java
 ClassA classA = new ClassA();
-InstanceFactory.set(ClassA.class, classA);
+InstanceFactory.set(classA, ClassA.class);
 
 ClassA classA1 = InstanceFactory.get(ClassA.class);
 ClassA classA2 = InstanceFactory.get(ClassA.class);

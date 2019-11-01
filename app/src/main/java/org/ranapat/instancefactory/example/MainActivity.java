@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         InstanceFactory.remove(ClassA.class);
 
         final ClassA instanceA3 = new ClassA();
-        InstanceFactory.set(ClassA.class, instanceA3);
+        InstanceFactory.set(instanceA3, ClassA.class);
 
         final ClassA instanceA3_1 = InstanceFactory.get(ClassA.class);
         instanceA3_1.explain();
@@ -34,5 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
         final ClassB classB2 = InstanceFactory.get(ClassB.class);
         classB2.explain();
+
+        final ClassC classC1 = InstanceFactory.get(ClassC.class, new Class[]{Integer.class}, 12);
+        classC1.explain();
+
+        final ClassC classC2 = InstanceFactory.get(ClassC.class, new Class[]{Integer.class}, 12);
+        classC2.explain();
     }
 }

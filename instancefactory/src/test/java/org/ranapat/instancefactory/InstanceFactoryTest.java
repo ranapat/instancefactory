@@ -37,20 +37,55 @@ public class InstanceFactoryTest {
     }
 
     @Test
+    public void gettingInstancesWithParametersShallCache() {
+        String instance1 = InstanceFactory.get(String.class, new Class[]{String.class}, "something");
+        String instance2 = InstanceFactory.get(String.class, new Class[]{String.class}, "something");
+
+        assertThat(instance1, is(sameInstance(instance2)));
+    }
+
+    @Test
+    public void gettingInstancesWithDifferentParametersShallDiffer() {
+        String instance1 = InstanceFactory.get(String.class, new Class[]{String.class}, "something1");
+        String instance2 = InstanceFactory.get(String.class, new Class[]{String.class}, "something2");
+
+        assertThat(instance1, is(not(sameInstance(instance2))));
+    }
+
+    @Test
     public void setInstanceForClassShouldWork() {
         String instance = "test";
-        InstanceFactory.set(String.class, instance);
+        InstanceFactory.set(instance, String.class);
 
         assertThat(InstanceFactory.get(String.class), is(sameInstance(instance)));
     }
 
     @Test
+    public void setInstanceForClassWithParametersShouldWork() {
+        String instance = "test";
+        InstanceFactory.set(instance, String.class, new Class[]{String.class}, "test");
+
+        assertThat(InstanceFactory.get(String.class, new Class[]{String.class}, "test"), is(sameInstance(instance)));
+    }
+
+    @Test
     public void removingInstanceAndGettingNewOneWorks() {
         String instance = "test";
-        InstanceFactory.set(String.class, instance);
+        InstanceFactory.set(instance, String.class);
         InstanceFactory.remove(String.class);
 
         String instance2 = InstanceFactory.get(String.class);
+
+        assertThat(instance, is(not(sameInstance(instance2))));
+    }
+
+    @Test
+    public void removingInstanceWithParametersAndGettingNewOneWorks() {
+        String instance = "test";
+        InstanceFactory.set(instance, String.class, new Class[]{String.class}, "test");
+        InstanceFactory.remove(String.class, new Class[]{String.class}, "test");
+
+        String instance2 = InstanceFactory.get(String.class, new Class[]{String.class}, "test");
 
         assertThat(instance, is(not(sameInstance(instance2))));
     }
@@ -80,6 +115,11 @@ public class InstanceFactoryTest {
     public void instanceOfAbstractClassShouldBeNull() {
         TestAbstractClass testAbstractClass = InstanceFactory.get(TestAbstractClass.class);
         assertThat(testAbstractClass, is(nullValue()));
+    }
+
+    @Test
+    public void shouldReturnNullInWrongInput() {
+        assertThat(InstanceFactory.get(String.class, new Class[]{String.class}), is(equalTo(null)));
     }
 
     @Test
