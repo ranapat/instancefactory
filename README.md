@@ -28,13 +28,16 @@ Run `./gradlew test`
 Run `./gradlew lint`
 
 ### Run jacoco tests
-Run `testReleaseUnitTestCoverage`
+Run `./gradlew testReleaseUnitTestCoverage`
 
 ### Outputs
 You can find the outputs here:
-- for the lint `./instancefactory/build/reports/lint-results-developmentDebug.html`
-- for the unit test coverage `./instancefactory/build/reports/jacoco/testReleaseUnitTestCoverage/html/index.html`
-- for the unit test summary `./instancefactory/build/reports/tests/testReleaseUnitTestCoverage/index.html`
+- for the lint
+`./instancefactory/build/reports/lint-results-developmentDebug.html`
+- for the unit test coverage
+`./instancefactory/build/reports/jacoco/testReleaseUnitTestCoverage/html/index.html`
+- for the unit test summary
+`./instancefactory/build/reports/tests/testReleaseUnitTestCoverage/index.html`
 
 ### Examples
 
