@@ -2,6 +2,11 @@
 
 Android java library for keeping instances
 
+## How to get it
+
+### Get it from jitpack
+[![](https://jitpack.io/v/ranapat/instancefactory.svg)](https://jitpack.io/#ranapat/instancefactory)
+
 ## Requirements
 * Java 8
 * Android SDK
