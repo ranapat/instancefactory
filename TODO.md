@@ -3,7 +3,8 @@
 ### Important
 
 - [x] Implement shorter name for InstanceFactory
-- [ ] Support construction parameters
+- [x] Support construction parameters
+- [ ] Implement some garbage collection concept
 
 ### General:
 
