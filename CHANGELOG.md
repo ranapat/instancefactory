@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 3 - 1.0.2 ] - 2019-11-04
+Version with parameters, Fi simplified only to get
+
 ## [ 2 - 1.0.1 ] - 2019-10-31
 Version with Fi as a short
 
