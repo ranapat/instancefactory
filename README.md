@@ -80,7 +80,6 @@ InstanceFactory.clear();
 Mark static class getter
 
 ```java
-
 @StaticallyInstantiable
 public class ClassB {
     private static ClassB instance;
