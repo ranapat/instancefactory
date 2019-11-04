@@ -37,20 +37,55 @@ public class InstanceFactoryTest {
     }
 
     @Test
+    public void gettingInstancesWithParametersShallCache() {
+        String instance1 = InstanceFactory.get(String.class, new Class[]{String.class}, "something");
+        String instance2 = InstanceFactory.get(String.class, new Class[]{String.class}, "something");
+
+        assertThat(instance1, is(sameInstance(instance2)));
+    }
+
+    @Test
+    public void gettingInstancesWithDifferentParametersShallDiffer() {
+        String instance1 = InstanceFactory.get(String.class, new Class[]{String.class}, "something1");
+        String instance2 = InstanceFactory.get(String.class, new Class[]{String.class}, "something2");
+
+        assertThat(instance1, is(not(sameInstance(instance2))));
+    }
+
+    @Test
     public void setInstanceForClassShouldWork() {
         String instance = "test";
-        InstanceFactory.set(String.class, instance);
+        InstanceFactory.set(instance, String.class);
 
         assertThat(InstanceFactory.get(String.class), is(sameInstance(instance)));
     }
 
     @Test
+    public void setInstanceForClassWithParametersShouldWork() {
+        String instance = "test";
+        InstanceFactory.set(instance, String.class, new Class[]{String.class}, "test");
+
+        assertThat(InstanceFactory.get(String.class, new Class[]{String.class}, "test"), is(sameInstance(instance)));
+    }
+
+    @Test
     public void removingInstanceAndGettingNewOneWorks() {
         String instance = "test";
-        InstanceFactory.set(String.class, instance);
+        InstanceFactory.set(instance, String.class);
         InstanceFactory.remove(String.class);
 
         String instance2 = InstanceFactory.get(String.class);
+
+        assertThat(instance, is(not(sameInstance(instance2))));
+    }
+
+    @Test
+    public void removingInstanceWithParametersAndGettingNewOneWorks() {
+        String instance = "test";
+        InstanceFactory.set(instance, String.class, new Class[]{String.class}, "test");
+        InstanceFactory.remove(String.class, new Class[]{String.class}, "test");
+
+        String instance2 = InstanceFactory.get(String.class, new Class[]{String.class}, "test");
 
         assertThat(instance, is(not(sameInstance(instance2))));
     }
@@ -83,6 +118,11 @@ public class InstanceFactoryTest {
     }
 
     @Test
+    public void shouldReturnNullInWrongInput() {
+        assertThat(InstanceFactory.get(String.class, new Class[]{String.class}), is(equalTo(null)));
+    }
+
+    @Test
     public void shouldNotBeCreatedDirectly() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<InstanceFactory> constructor = InstanceFactory.class.getDeclaredConstructor();
         assertThat(Modifier.isPrivate(constructor.getModifiers()), is(equalTo(true)));
@@ -92,9 +132,24 @@ public class InstanceFactoryTest {
     }
 
     @Test
-    public void shallWorkWithStaticallyMarked() {
-        StaticallyMarked staticallyMarked = InstanceFactory.get(StaticallyMarked.class);
-        assertThat(staticallyMarked, is(not(nullValue())));
+    public void shallWorkWithStaticallyMarkedWithoutParameters() {
+        StaticallyMarkedA staticallyMarked1 = InstanceFactory.get(StaticallyMarkedA.class);
+        assertThat(staticallyMarked1, is(not(nullValue())));
+
+        StaticallyMarkedA staticallyMarked2 = InstanceFactory.get(StaticallyMarkedA.class);
+        assertThat(staticallyMarked2, is(equalTo(staticallyMarked2)));
+    }
+
+    @Test
+    public void shallWorkWithStaticallyMarkedWithParameters() {
+        StaticallyMarkedB staticallyMarked1 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "something");
+        assertThat(staticallyMarked1, is(not(nullValue())));
+
+        StaticallyMarkedB staticallyMarked2 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "something");
+        assertThat(staticallyMarked2, is(equalTo(staticallyMarked2)));
+
+        StaticallyMarkedB staticallyMarked3 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "somethingElse");
+        assertThat(staticallyMarked2, is(not(equalTo(staticallyMarked3))));
     }
 }
 
@@ -111,12 +166,21 @@ class TestClassWithPrivateConstructor {
 }
 
 @StaticallyInstantiable
-class StaticallyMarked {
-    public static StaticallyMarked getInstance() {
-        return new StaticallyMarked();
+class StaticallyMarkedA {
+    public static StaticallyMarkedA getInstance() {
+        return new StaticallyMarkedA();
     }
 
-    private StaticallyMarked() {}
+    private StaticallyMarkedA() {}
+}
+
+@StaticallyInstantiable
+class StaticallyMarkedB {
+    public static StaticallyMarkedB getInstance(final String parameter) {
+        return new StaticallyMarkedB(parameter);
+    }
+
+    private StaticallyMarkedB(final String parameter) {}
 }
 
 abstract class TestAbstractClass {}

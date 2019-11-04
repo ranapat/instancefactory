@@ -2,6 +2,10 @@
 
 Android java library for keeping instances
 
+You can keep instances of classes with or without parameters in constructors and different parameter sets will be kept separately.
+
+Class(String 'one') != Class(String 'two')
+
 ## How to get it
 
 ### Get it from jitpack
@@ -11,9 +15,6 @@ Android java library for keeping instances
 * Java 8
 * Android SDK
 * Gradle
-
-## Limitations
-So far we do not support construction parameters
 
 ## Building
 Build tool is gradle
@@ -41,6 +42,13 @@ You can find the outputs here:
 
 ### Examples
 
+Fast access
+
+```java
+Fi.get(ClassA.class);
+// Fi instead of InstanceFactory
+```
+
 Get instance
 
 ```java
@@ -51,7 +59,7 @@ Set instance
 
 ```java
 ClassA classA = new ClassA();
-InstanceFactory.set(ClassA.class, classA);
+InstanceFactory.set(classA, ClassA.class);
 
 ClassA classA1 = InstanceFactory.get(ClassA.class);
 ClassA classA2 = InstanceFactory.get(ClassA.class);
@@ -72,7 +80,6 @@ InstanceFactory.clear();
 Mark static class getter
 
 ```java
-
 @StaticallyInstantiable
 public class ClassB {
     private static ClassB instance;

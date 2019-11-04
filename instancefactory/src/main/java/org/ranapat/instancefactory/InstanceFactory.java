@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class InstanceFactory {
-    private static final Map<Class, Object> map = Collections.synchronizedMap(new HashMap<Class, Object>());
+    private static final Map<String, Object> map = Collections.synchronizedMap(new HashMap<String, Object>());
 
     private InstanceFactory() {
         //
@@ -15,25 +15,37 @@ public final class InstanceFactory {
 
     @SuppressWarnings("unchecked")
     public static synchronized <T> T get(final Class<T> _class) {
+        return get(_class, new Class[]{});
+    }
+
+    @SuppressWarnings("unchecked")
+    public static synchronized <T> T get(final Class<T> _class, final Class[] types, final Object... values) {
+        final String key = KeyGenerator.generate(_class, types, values);
+
+        if (key == null) {
+            return null;
+        }
+
         T result;
 
-        if (map.containsKey(_class)) {
-            result = (T) map.get(_class);
+        if (map.containsKey(key)) {
+            result = (T) map.get(key);
         } else {
             try {
                 if (_class.isAnnotationPresent(StaticallyInstantiable.class)) {
                     final StaticallyInstantiable annotation = _class.getAnnotation(StaticallyInstantiable.class);
-                    final Method method = _class.getDeclaredMethod(annotation.method());
+                    final Method method = _class.getDeclaredMethod(annotation.method(), types);
 
-                    result = (T) method.invoke(null);
+                    result = (T) method.invoke(null, values);
                 } else {
-                    result = _class.newInstance();
+                    result = _class.getDeclaredConstructor(types).newInstance(values);
                 }
 
-                map.put(_class, result);
+                map.put(key, result);
             } catch (
                     final InstantiationException
                             | IllegalAccessException
+                            | IllegalArgumentException
                             | InvocationTargetException
                             | NoSuchMethodException
                             exception
@@ -45,12 +57,24 @@ public final class InstanceFactory {
         return result;
     }
 
-    public static synchronized void set(final Class _class, final Object value) {
-        map.put(_class, value);
+    public static synchronized void set(final Object value, final Class _class) {
+        set(value, _class, new Class[]{});
+    }
+
+    public static synchronized void set(final Object value, final Class _class, final Class[] types, final Object... values) {
+        final String key = KeyGenerator.generate(_class, types, values);
+
+        map.put(key, value);
     }
 
     public static synchronized void remove(final Class _class) {
-        map.remove(_class);
+        remove(_class, new Class[]{});
+    }
+
+    public static synchronized void remove(final Class _class, final Class[] types, final Object... values) {
+        final String key = KeyGenerator.generate(_class, types, values);
+
+        map.remove(key);
     }
 
     public static synchronized void clear() {

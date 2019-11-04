@@ -18,7 +18,7 @@ public class FiTest {
 
     @After
     public void after() {
-        Fi.clear();
+        InstanceFactory.clear();
     }
 
     @Test
@@ -34,39 +34,6 @@ public class FiTest {
         String instance2 = Fi.get(String.class);
 
         assertThat(instance1, is(sameInstance(instance2)));
-    }
-
-    @Test
-    public void setInstanceForClassShouldWork() {
-        String instance = "test";
-        Fi.set(String.class, instance);
-
-        assertThat(Fi.get(String.class), is(sameInstance(instance)));
-    }
-
-    @Test
-    public void removingInstanceAndGettingNewOneWorks() {
-        String instance = "test";
-        Fi.set(String.class, instance);
-        Fi.remove(String.class);
-
-        String instance2 = Fi.get(String.class);
-
-        assertThat(instance, is(not(sameInstance(instance2))));
-    }
-
-    @Test
-    public void clearingInstanceFactoryShouldLeadToAllInstanceBeingCreatedFreshly() {
-        TestInstance integerInstance1 = Fi.get(TestInstance.class);
-        String stringInstance1 = Fi.get(String.class);
-
-        Fi.clear();
-
-        TestInstance integerInstance2 = Fi.get(TestInstance.class);
-        String stringInstance2 = Fi.get(String.class);
-
-        assertThat(integerInstance1, is(not(sameInstance(integerInstance2))));
-        assertThat(stringInstance1, is(not(sameInstance(stringInstance2))));
     }
 
     @Test
@@ -93,7 +60,7 @@ public class FiTest {
 
     @Test
     public void shallWorkWithStaticallyMarked() {
-        StaticallyMarked staticallyMarked = Fi.get(StaticallyMarked.class);
+        StaticallyMarkedA staticallyMarked = Fi.get(StaticallyMarkedA.class);
         assertThat(staticallyMarked, is(not(nullValue())));
     }
 }
