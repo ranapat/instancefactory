@@ -34,9 +34,9 @@ public final class InstanceFactory {
             try {
                 if (_class.isAnnotationPresent(StaticallyInstantiable.class)) {
                     final StaticallyInstantiable annotation = _class.getAnnotation(StaticallyInstantiable.class);
-                    final Method method = _class.getDeclaredMethod(annotation.method());
+                    final Method method = _class.getDeclaredMethod(annotation.method(), types);
 
-                    result = (T) method.invoke(null);
+                    result = (T) method.invoke(null, values);
                 } else {
                     result = _class.getDeclaredConstructor(types).newInstance(values);
                 }
@@ -45,6 +45,7 @@ public final class InstanceFactory {
             } catch (
                     final InstantiationException
                             | IllegalAccessException
+                            | IllegalArgumentException
                             | InvocationTargetException
                             | NoSuchMethodException
                             exception

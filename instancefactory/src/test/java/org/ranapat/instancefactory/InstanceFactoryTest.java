@@ -132,9 +132,24 @@ public class InstanceFactoryTest {
     }
 
     @Test
-    public void shallWorkWithStaticallyMarked() {
-        StaticallyMarked staticallyMarked = InstanceFactory.get(StaticallyMarked.class);
-        assertThat(staticallyMarked, is(not(nullValue())));
+    public void shallWorkWithStaticallyMarkedWithoutParameters() {
+        StaticallyMarkedA staticallyMarked1 = InstanceFactory.get(StaticallyMarkedA.class);
+        assertThat(staticallyMarked1, is(not(nullValue())));
+
+        StaticallyMarkedA staticallyMarked2 = InstanceFactory.get(StaticallyMarkedA.class);
+        assertThat(staticallyMarked2, is(equalTo(staticallyMarked2)));
+    }
+
+    @Test
+    public void shallWorkWithStaticallyMarkedWithParameters() {
+        StaticallyMarkedB staticallyMarked1 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "something");
+        assertThat(staticallyMarked1, is(not(nullValue())));
+
+        StaticallyMarkedB staticallyMarked2 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "something");
+        assertThat(staticallyMarked2, is(equalTo(staticallyMarked2)));
+
+        StaticallyMarkedB staticallyMarked3 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "somethingElse");
+        assertThat(staticallyMarked2, is(not(equalTo(staticallyMarked3))));
     }
 }
 
@@ -151,12 +166,21 @@ class TestClassWithPrivateConstructor {
 }
 
 @StaticallyInstantiable
-class StaticallyMarked {
-    public static StaticallyMarked getInstance() {
-        return new StaticallyMarked();
+class StaticallyMarkedA {
+    public static StaticallyMarkedA getInstance() {
+        return new StaticallyMarkedA();
     }
 
-    private StaticallyMarked() {}
+    private StaticallyMarkedA() {}
+}
+
+@StaticallyInstantiable
+class StaticallyMarkedB {
+    public static StaticallyMarkedB getInstance(final String parameter) {
+        return new StaticallyMarkedB(parameter);
+    }
+
+    private StaticallyMarkedB(final String parameter) {}
 }
 
 abstract class TestAbstractClass {}

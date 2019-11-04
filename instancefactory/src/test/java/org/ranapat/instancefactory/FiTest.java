@@ -60,7 +60,7 @@ public class FiTest {
 
     @Test
     public void shallWorkWithStaticallyMarked() {
-        StaticallyMarked staticallyMarked = Fi.get(StaticallyMarked.class);
+        StaticallyMarkedA staticallyMarked = Fi.get(StaticallyMarkedA.class);
         assertThat(staticallyMarked, is(not(nullValue())));
     }
 }
