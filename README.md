@@ -10,6 +10,7 @@ Class(String 'one') != Class(String 'two')
 
 ### Get it from jitpack
 [![](https://jitpack.io/v/ranapat/instancefactory.svg)](https://jitpack.io/#ranapat/instancefactory)
+[![](https://jitci.com/gh/ranapat/instancefactory/svg)](https://jitci.com/gh/ranapat/instancefactory)
 
 ## Requirements
 * Java 8
