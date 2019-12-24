@@ -1,5 +1,7 @@
 # InstanceFactory
 
+[![Coverage Status](https://coveralls.io/repos/github/ranapat/instancefactory/badge.svg?branch=master)](https://coveralls.io/github/ranapat/instancefactory?branch=master)
+
 Android java library for keeping instances
 
 You can keep instances of classes with or without parameters in constructors and different parameter sets will be kept separately.
