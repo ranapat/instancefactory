@@ -10,7 +10,7 @@ Class(String 'one') != Class(String 'two')
 
 ## Live example
 
-Easy injection pattern can be seen [here](https://github.com/ranapat/simpledependencyinjecting).
+Easy injection pattern can be seen [here](https://github.com/ranapat/simpledependencyinjecting)
 
 ## How to get it
 
