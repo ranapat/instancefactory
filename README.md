@@ -8,6 +8,10 @@ You can keep instances of classes with or without parameters in constructors and
 
 Class(String 'one') != Class(String 'two')
 
+## Live example
+
+Easy injection pattern can be seen [here](https://github.com/ranapat/simpledependencyinjecting)
+
 ## How to get it
 
 ### Get it from jitpack
