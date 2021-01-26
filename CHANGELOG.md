@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 5 - 1.0.4 ] - 2021-01-26
+DynamicallyInitialisable InstanceFactory.initialise(instance)
+
 ## [ 4 - 1.0.3 ] - 2021-01-26
 Update versions
 
