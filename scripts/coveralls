@@ -1,1 +1,1 @@
-CI=true COVERALLS_REPO_TOKEN=sRsY7R2Fe6EaXwGp10rL2I0gyDnB2ED2a ./gradlew coveralls
+./gradlew testReleaseUnitTestCoverage && CI=true COVERALLS_REPO_TOKEN=sRsY7R2Fe6EaXwGp10rL2I0gyDnB2ED2a ./gradlew coveralls
