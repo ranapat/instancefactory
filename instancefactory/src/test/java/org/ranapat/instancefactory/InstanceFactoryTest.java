@@ -22,6 +22,34 @@ public class InstanceFactoryTest {
     }
 
     @Test
+    public void initializeDynamicallyInitialisableFields() {
+        final InstanceToDynamicallyInitiliseV1 instance1 = new InstanceToDynamicallyInitiliseV1();
+        final InstanceToDynamicallyInitiliseV2 instance2 = new InstanceToDynamicallyInitiliseV2();
+        final InstanceToDynamicallyInitiliseV3 instance3 = new InstanceToDynamicallyInitiliseV3();
+
+        assertThat(instance1.getValue1(), is(equalTo(null)));
+        assertThat(instance2.getValue1(), is(equalTo(null)));
+        assertThat(instance3.getValue1(), is(equalTo(null)));
+        assertThat(instance1.getValue2(), is(equalTo(0)));
+        assertThat(instance2.getValue2(), is(equalTo(0)));
+        assertThat(instance3.getValue2(), is(equalTo(0)));
+
+        InstanceFactory.initialise(instance1);
+        InstanceFactory.initialise(instance2);
+        InstanceFactory.initialise(instance3);
+
+        assertThat(instance1.getValue1(), is(not(equalTo(null))));
+        assertThat(instance2.getValue1(), is(equalTo(null)));
+        assertThat(instance3.getValue1(), is(not(equalTo(null))));
+        assertThat(instance1.getValue2(), is(equalTo(0)));
+        assertThat(instance2.getValue2(), is(equalTo(0)));
+        assertThat(instance3.getValue2(), is(equalTo(0)));
+        assertThat(instance1.getValue1() instanceof TestInstance, is(equalTo(true)));
+        assertThat(instance3.getValue1() instanceof TestInstance, is(equalTo(true)));
+        assertThat(instance1.getValue1(), is(equalTo(instance3.getValue1())));
+    }
+
+    @Test
     public void gettingNotPresentInstanceShouldProduceNewInstance() {
         String instance = InstanceFactory.get(String.class);
 
@@ -153,11 +181,58 @@ public class InstanceFactoryTest {
     }
 }
 
+class InstanceToDynamicallyInitiliseV1 {
+    @DynamicallyInitialisable
+    private TestInstance value1;
+    private int value2;
+
+    public TestInstance getValue1() {
+        return value1;
+    }
+
+    public int getValue2() {
+        return value2;
+    }
+}
+class InstanceToDynamicallyInitiliseV2 {
+    private TestInstance value1;
+    @DynamicallyInitialisable
+    private int value2;
+
+    public TestInstance getValue1() {
+        return value1;
+    }
+
+    public int getValue2() {
+        return value2;
+    }
+}
+class InstanceToDynamicallyInitiliseV3 {
+    @DynamicallyInitialisable
+    private final TestInstance value1 = null;
+    private int value2;
+
+    public TestInstance getValue1() {
+        return value1;
+    }
+
+    public int getValue2() {
+        return value2;
+    }
+}
+
 class TestInstance {
     private String test;
 
     public TestInstance() {
         this.test = "test";
+    }
+
+    @Override
+    public String toString() {
+        return "TestInstance{" +
+                "test='" + test + '\'' +
+                '}';
     }
 }
 

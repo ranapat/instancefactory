@@ -1,5 +1,6 @@
 package org.ranapat.instancefactory;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -11,6 +12,22 @@ public final class InstanceFactory {
 
     private InstanceFactory() {
         //
+    }
+
+    public static synchronized void initialise(final Object instance) {
+        final Field[] fields = instance.getClass().getDeclaredFields();
+        for (final Field field : fields) {
+            if (field.isAnnotationPresent(DynamicallyInitialisable.class)) {
+                //final DynamicallyInitialisable dynamicallyInitialisable = field.getAnnotation(DynamicallyInitialisable.class);
+
+                try {
+                    field.setAccessible(true);
+                    field.set(instance, InstanceFactory.get(field.getType()));
+                } catch (Exception e) {
+                    //
+                }
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")

@@ -46,5 +46,23 @@ public class MainActivity extends AppCompatActivity {
 
         final ClassD classD2 = InstanceFactory.get(ClassD.class, new Class[]{String.class}, "something");
         classD2.explain();
+
+        final ClassE classE1 = InstanceFactory.get(ClassE.class);
+        classE1.explain();
+
+        final ClassE classE2 = InstanceFactory.get(ClassE.class);
+        classE2.explain();
+
+        InstanceFactory.initialise(classE1);
+        InstanceFactory.initialise(classE2);
+
+        classE1.explain();
+        classE2.explain();
+
+        final ClassF classF1 = InstanceFactory.get(ClassF.class);
+        classF1.explain();
+
+        final ClassF classF2 = InstanceFactory.get(ClassF.class);
+        classF2.explain();
     }
 }
