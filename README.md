@@ -103,3 +103,20 @@ public class ClassB {
 
 ClassB classB1 = InstanceFactory.get(ClassB.class);
 ```
+
+Dynamically Initialisable
+
+```java
+class ClassC {
+    @DynamicallyInitialisable
+    private final ClassA value1 = null;
+
+    public ClassC() {
+        ...
+
+        InstanceFactory.initialise(this);
+    }
+}
+
+```
+
