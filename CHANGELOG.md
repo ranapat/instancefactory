@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 9 - 1.4.0.0 ] - 2021-01-28
+try to fix release tags
+### Changes
+- fix-release-tag-names
+ 
 ## [ 8 - 1.3.0.0 ] - 2021-01-28
 update changeslogs
 ### Changes
