@@ -120,17 +120,17 @@ function commitVersionFile() {
 
         echo "${CLI_COLOR_GRAY}    git add $rootPath/$GRADLE_FILE${CLI_COLOR_RESET}"
         echo "${CLI_COLOR_GRAY}    git commit -m \"release version $nextVersionCode $nextVersionName\"${CLI_COLOR_RESET}"
-        echo "${CLI_COLOR_GRAY}    git tag release-$nextVersionCode-$nextVersionName${CLI_COLOR_RESET}"
+        echo "${CLI_COLOR_GRAY}    git tag $nextVersionName${CLI_COLOR_RESET}"
     else
         git add $rootPath/$GRADLE_FILE
         git commit -m "release version $nextVersionCode $nextVersionName"
-        git tag release-$nextVersionCode-$nextVersionName
+        git tag $nextVersionName
     fi
 
     echo ""
     echo "${CLI_COLOR_YELLOW}  don't forget to push to origin or whatever build pipeline is connected to${CLI_COLOR_RESET}"
     echo "${CLI_COLOR_YELLOW}    git push origin${CLI_COLOR_RESET}"
-    echo "${CLI_COLOR_YELLOW}    git push origin release-$nextVersionCode-$nextVersionName${CLI_COLOR_RESET}"
+    echo "${CLI_COLOR_YELLOW}    git push origin $nextVersionName${CLI_COLOR_RESET}"
 
     if [ "$DRY_RUN" = true ]; then
         echo ""
@@ -139,7 +139,7 @@ function commitVersionFile() {
         read -p "${CLI_COLOR_YELLOW}Do you want to push automatically? ( ${CLI_COLOR_GREEN}y${CLI_COLOR_YELLOW} / ${CLI_COLOR_RED}N${CLI_COLOR_YELLOW} )? ${CLI_COLOR_RESET}" answer
         if [ "$answer" != "${answer#[Yy]}" ] ;then
             git push --set-upstream origin $(getReleaseBranch $nextVersionName)
-            git push origin release-$nextVersionCode-$nextVersionName
+            git push origin $nextVersionName
 
             echo ""
             echo "${CLI_COLOR_GREEN}All done... Check around just to be sure.${CLI_COLOR_RESET}"
