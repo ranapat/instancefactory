@@ -155,7 +155,7 @@ function go() {
             else
                 echo -e "- title not specified" >> $CHANGELOG_FILE_
             fi
--n-" >> $CHANGELOG_FILE_
+            echo -e "-n-" >> $CHANGELOG_FILE_
         fi
     done
 
