@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 8 - 1.3.0.0 ] - 2021-01-28
+update changeslogs
+### Changes
 ## [ 6 - 1.1.0 ] - 2021-01-27
 Bump version
 
