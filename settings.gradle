@@ -1,2 +1,2 @@
 include ':app', ':instancefactory'
-rootProject.name='Example'
+rootProject.name='InstanceFactory with Examples'
