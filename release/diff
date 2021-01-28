@@ -59,6 +59,27 @@ function go() {
 
     mergeLogs=$(git log --pretty=oneline --abbrev-commit --reverse $maxVersionBranch..HEAD | grep Merge 2>&1)
     IFS=$'\n' read -rd '' -a y <<<"$mergeLogs"
+
+    for i in "${y[@]}"
+    do
+        mergePullMatch=$(expr "$i" : '.* Merge pull request .*/\(.*\)')
+        mergePullWithTicketMatch=$(expr "$mergePullMatch" : '\([A-Z]*-[0-9]*\)')
+        if [ "$mergePullWithTicketMatch" = "" ]; then
+            if [ "$mergePullMatch" != "" ]; then
+                echo "${mergePullMatch/no-ticket\//}"
+                echo ""
+            fi
+        else
+            dirtyTitle=${mergePullMatch/$mergePullWithTicketMatch/}
+            pureTitle=$(expr "$dirtyTitle" : '[^a-zA-Z0-9]*\(.*\)')
+            if [ "$pureTitle" != "" ]; then
+                echo "${pureTitle}"
+            else
+                echo "title not specified"
+            fi
+            echo ""
+        fi
+    done
 }
 
 go
