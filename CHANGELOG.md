@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 11 - 1.5.1.0 ] - 2021-04-07
+set only by value
+### Changes
 ## [ 10 - 1.5.0.0 ] - 2021-01-28
 update gradle to latest
 ### Changes
