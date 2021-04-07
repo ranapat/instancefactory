@@ -81,6 +81,14 @@ public class InstanceFactoryTest {
     }
 
     @Test
+    public void setInstanceWithoutClassShouldWork() {
+        String instance = "test";
+        InstanceFactory.set(instance);
+
+        assertThat(InstanceFactory.get(String.class), is(sameInstance(instance)));
+    }
+
+    @Test
     public void setInstanceForClassShouldWork() {
         String instance = "test";
         InstanceFactory.set(instance, String.class);

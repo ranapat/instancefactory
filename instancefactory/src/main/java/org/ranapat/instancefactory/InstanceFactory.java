@@ -74,6 +74,10 @@ public final class InstanceFactory {
         return result;
     }
 
+    public static synchronized void set(final Object value) {
+        set(value, value.getClass());
+    }
+
     public static synchronized void set(final Object value, final Class _class) {
         set(value, _class, new Class[]{});
     }
