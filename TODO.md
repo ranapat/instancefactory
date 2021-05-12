@@ -2,8 +2,7 @@
 
 ### Important
 
-- [x] Implement shorter name for InstanceFactory
-- [x] Support construction parameters
+- [ ] Support @Inject with parameters for get
 - [ ] Implement some garbage collection concept
 
 ### General:

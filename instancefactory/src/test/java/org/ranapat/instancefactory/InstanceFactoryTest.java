@@ -22,7 +22,7 @@ public class InstanceFactoryTest {
     }
 
     @Test
-    public void initializeDynamicallyInitialisableFields() {
+    public void initializeDynamicallyInitialisableFieldsExplicit() {
         final InstanceToDynamicallyInitiliseV1 instance1 = new InstanceToDynamicallyInitiliseV1();
         final InstanceToDynamicallyInitiliseV2 instance2 = new InstanceToDynamicallyInitiliseV2();
         final InstanceToDynamicallyInitiliseV3 instance3 = new InstanceToDynamicallyInitiliseV3();
@@ -34,9 +34,26 @@ public class InstanceFactoryTest {
         assertThat(instance2.getValue2(), is(equalTo(0)));
         assertThat(instance3.getValue2(), is(equalTo(0)));
 
-        InstanceFactory.initialise(instance1);
-        InstanceFactory.initialise(instance2);
-        InstanceFactory.initialise(instance3);
+        InstanceFactory.inject(instance1);
+        InstanceFactory.inject(instance2);
+        InstanceFactory.inject(instance3);
+
+        assertThat(instance1.getValue1(), is(not(equalTo(null))));
+        assertThat(instance2.getValue1(), is(equalTo(null)));
+        assertThat(instance3.getValue1(), is(not(equalTo(null))));
+        assertThat(instance1.getValue2(), is(equalTo(0)));
+        assertThat(instance2.getValue2(), is(equalTo(0)));
+        assertThat(instance3.getValue2(), is(equalTo(0)));
+        assertThat(instance1.getValue1() instanceof TestInstance, is(equalTo(true)));
+        assertThat(instance3.getValue1() instanceof TestInstance, is(equalTo(true)));
+        assertThat(instance1.getValue1(), is(equalTo(instance3.getValue1())));
+    }
+
+    @Test
+    public void initializeDynamicallyInitialisableFieldsImplicit() {
+        final InstanceToDynamicallyInitiliseV1 instance1 = InstanceFactory.get(InstanceToDynamicallyInitiliseV1.class);
+        final InstanceToDynamicallyInitiliseV2 instance2 = InstanceFactory.get(InstanceToDynamicallyInitiliseV2.class);
+        final InstanceToDynamicallyInitiliseV3 instance3 = InstanceFactory.get(InstanceToDynamicallyInitiliseV3.class);
 
         assertThat(instance1.getValue1(), is(not(equalTo(null))));
         assertThat(instance2.getValue1(), is(equalTo(null)));
@@ -190,7 +207,7 @@ public class InstanceFactoryTest {
 }
 
 class InstanceToDynamicallyInitiliseV1 {
-    @DynamicallyInitialisable
+    @Inject
     private TestInstance value1;
     private int value2;
 
@@ -204,7 +221,7 @@ class InstanceToDynamicallyInitiliseV1 {
 }
 class InstanceToDynamicallyInitiliseV2 {
     private TestInstance value1;
-    @DynamicallyInitialisable
+    @Inject
     private int value2;
 
     public TestInstance getValue1() {
@@ -216,7 +233,7 @@ class InstanceToDynamicallyInitiliseV2 {
     }
 }
 class InstanceToDynamicallyInitiliseV3 {
-    @DynamicallyInitialisable
+    @Inject
     private final TestInstance value1 = null;
     private int value2;
 
@@ -248,7 +265,7 @@ class TestClassWithPrivateConstructor {
     private TestClassWithPrivateConstructor() {}
 }
 
-@StaticallyInstantiable
+@Static
 class StaticallyMarkedA {
     public static StaticallyMarkedA getInstance() {
         return new StaticallyMarkedA();
@@ -257,9 +274,9 @@ class StaticallyMarkedA {
     private StaticallyMarkedA() {}
 }
 
-@StaticallyInstantiable
+@Static(method = "getInstanceCustom")
 class StaticallyMarkedB {
-    public static StaticallyMarkedB getInstance(final String parameter) {
+    public static StaticallyMarkedB getInstanceCustom(final String parameter) {
         return new StaticallyMarkedB(parameter);
     }
 

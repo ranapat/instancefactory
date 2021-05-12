@@ -2,9 +2,9 @@ package org.ranapat.instancefactory.example;
 
 import android.util.Log;
 
-import org.ranapat.instancefactory.StaticallyInstantiable;
+import org.ranapat.instancefactory.Static;
 
-@StaticallyInstantiable
+@Static
 public class ClassD implements Explainable {
     private static ClassD instance;
     public static ClassD getInstance(final String passed) {

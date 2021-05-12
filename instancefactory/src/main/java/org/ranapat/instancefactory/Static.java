@@ -6,8 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface DynamicallyInitialisable {
+@Target(ElementType.TYPE)
+public @interface Static {
+    String method() default "getInstance";
 }
-
-

@@ -14,15 +14,15 @@ public final class InstanceFactory {
         //
     }
 
-    public static synchronized void initialise(final Object instance) {
+    public static synchronized void inject(final Object instance) {
         final Field[] fields = instance.getClass().getDeclaredFields();
         for (final Field field : fields) {
-            if (field.isAnnotationPresent(DynamicallyInitialisable.class)) {
-                //final DynamicallyInitialisable dynamicallyInitialisable = field.getAnnotation(DynamicallyInitialisable.class);
+            if (field.isAnnotationPresent(Inject.class)) {
+                //final Inject injected = field.getAnnotation(Inject.class);
 
                 try {
                     field.setAccessible(true);
-                    field.set(instance, InstanceFactory.get(field.getType()));
+                    field.set(instance, get(field.getType()));
                 } catch (Exception e) {
                     //
                 }
@@ -49,14 +49,16 @@ public final class InstanceFactory {
             result = (T) map.get(key);
         } else {
             try {
-                if (_class.isAnnotationPresent(StaticallyInstantiable.class)) {
-                    final StaticallyInstantiable annotation = _class.getAnnotation(StaticallyInstantiable.class);
+                if (_class.isAnnotationPresent(Static.class)) {
+                    final Static annotation = _class.getAnnotation(Static.class);
                     final Method method = _class.getDeclaredMethod(annotation.method(), types);
 
                     result = (T) method.invoke(null, values);
                 } else {
                     result = _class.getDeclaredConstructor(types).newInstance(values);
                 }
+
+                inject(result);
 
                 map.put(key, result);
             } catch (

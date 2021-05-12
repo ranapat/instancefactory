@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         final ClassE classE2 = InstanceFactory.get(ClassE.class);
         classE2.explain();
 
-        InstanceFactory.initialise(classE1);
-        InstanceFactory.initialise(classE2);
+        InstanceFactory.inject(classE1);
+        InstanceFactory.inject(classE2);
 
         classE1.explain();
         classE2.explain();
@@ -64,5 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
         final ClassF classF2 = InstanceFactory.get(ClassF.class);
         classF2.explain();
+
+        final ClassG classG1 = InstanceFactory.get(ClassG.class);
+        classG1.explain();
+
+        final ClassG classG2 = InstanceFactory.get(ClassG.class);
+        classG2.explain();
     }
 }
