@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 15 - 1.6.3.0 ] - 2021-05-12
+debug feedback, manual inject only
+### Changes
+- try-to-call-inject-only-once-on-object
+ 
 ## [ 14 - 1.6.2.0 ] - 2021-05-12
 custom annotation types and weakreferences
 ### Changes
