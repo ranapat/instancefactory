@@ -1,5 +1,6 @@
 package org.ranapat.instancefactory;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,12 +19,29 @@ public final class InstanceFactory {
         final Field[] fields = instance.getClass().getDeclaredFields();
         for (final Field field : fields) {
             if (field.isAnnotationPresent(Inject.class)) {
-                //final Inject injected = field.getAnnotation(Inject.class);
+                final Inject injected = field.getAnnotation(Inject.class);
+                final Class<?> injectedType = injected.type();
+                final Class<?> fieldType = field.getType();
 
                 try {
+                    final Class<?> type;
+                    if (injectedType != void.class) {
+                        type = injectedType;
+                    } else {
+                        type = fieldType;
+                    }
+
+                    final Object value;
+                    if (fieldType == WeakReference.class) {
+                        value = new WeakReference<>(get(type));
+                    } else {
+                        value = get(type);
+                    }
+
                     field.setAccessible(true);
-                    field.set(instance, get(field.getType()));
-                } catch (Exception e) {
+                    field.set(instance, value);
+                } catch (final Exception e) {
+                    e.printStackTrace();
                     //
                 }
             }
@@ -32,7 +50,6 @@ public final class InstanceFactory {
         return instance;
     }
 
-    @SuppressWarnings("unchecked")
     public static synchronized <T> T get(final Class<T> _class) {
         return get(_class, new Class[]{});
     }

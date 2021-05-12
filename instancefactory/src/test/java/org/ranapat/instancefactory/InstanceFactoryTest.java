@@ -2,6 +2,17 @@ package org.ranapat.instancefactory;
 
 import org.junit.After;
 import org.junit.Test;
+import org.ranapat.instancefactory.tools.ExtraTestInstance;
+import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV1;
+import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV2;
+import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV3;
+import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV4;
+import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV5;
+import org.ranapat.instancefactory.tools.StaticallyMarkedA;
+import org.ranapat.instancefactory.tools.StaticallyMarkedB;
+import org.ranapat.instancefactory.tools.TestAbstractClass;
+import org.ranapat.instancefactory.tools.TestClassWithPrivateConstructor;
+import org.ranapat.instancefactory.tools.TestInstance;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -95,39 +106,73 @@ public class InstanceFactoryTest {
     }
 
     @Test
+    public void injectWithPredefinedType() {
+        final InstanceToDynamicallyInitiliseV5 instance5 = new InstanceToDynamicallyInitiliseV5();
+
+        assertThat(instance5.getValue1(), is(equalTo(null)));
+        assertThat(instance5.getValue2(), is(equalTo(0)));
+
+        final InstanceToDynamicallyInitiliseV3 instance33 = InstanceFactory.inject(new InstanceToDynamicallyInitiliseV3());
+        final InstanceToDynamicallyInitiliseV5 instance55 = InstanceFactory.inject(new InstanceToDynamicallyInitiliseV5());
+
+        assertThat(instance55.getValue1(), is(not(equalTo(null))));
+        assertThat(instance55.getValue2(), is(equalTo(0)));
+        assertThat(instance55.getValue1() instanceof TestInstance, is(equalTo(true)));
+        assertThat(instance55.getValue1() instanceof ExtraTestInstance, is(equalTo(true)));
+        assertThat(instance55.getValue1(), is(not(equalTo(instance33.getValue1()))));
+        assertThat((ExtraTestInstance) instance55.getValue1(), is(equalTo(InstanceFactory.get(ExtraTestInstance.class))));
+    }
+
+    @Test
+    public void injectWeakReference() {
+        final InstanceToDynamicallyInitiliseV4 instance4 = new InstanceToDynamicallyInitiliseV4();
+
+        assertThat(instance4.getValue1(), is(equalTo(null)));
+        assertThat(instance4.getValue2(), is(equalTo(0)));
+
+        final InstanceToDynamicallyInitiliseV3 instance33 = InstanceFactory.inject(new InstanceToDynamicallyInitiliseV3());
+        final InstanceToDynamicallyInitiliseV4 instance44 = InstanceFactory.inject(new InstanceToDynamicallyInitiliseV4());
+
+        assertThat(instance44.getValue1(), is(not(equalTo(null))));
+        assertThat(instance44.getValue2(), is(equalTo(0)));
+        assertThat(instance44.getValue1() instanceof TestInstance, is(equalTo(true)));
+        assertThat(instance44.getValue1(), is(equalTo(instance33.getValue1())));
+    }
+
+    @Test
     public void gettingNotPresentInstanceShouldProduceNewInstance() {
-        String instance = InstanceFactory.get(String.class);
+        final String instance = InstanceFactory.get(String.class);
 
         assertThat(instance, is(not(nullValue())));
     }
 
     @Test
     public void gettingTwoTimesSameClassInstanceShouldReturnSameInstance() {
-        String instance1 = InstanceFactory.get(String.class);
-        String instance2 = InstanceFactory.get(String.class);
+        final String instance1 = InstanceFactory.get(String.class);
+        final String instance2 = InstanceFactory.get(String.class);
 
         assertThat(instance1, is(sameInstance(instance2)));
     }
 
     @Test
     public void gettingInstancesWithParametersShallCache() {
-        String instance1 = InstanceFactory.get(String.class, new Class[]{String.class}, "something");
-        String instance2 = InstanceFactory.get(String.class, new Class[]{String.class}, "something");
+        final String instance1 = InstanceFactory.get(String.class, new Class[]{String.class}, "something");
+        final String instance2 = InstanceFactory.get(String.class, new Class[]{String.class}, "something");
 
         assertThat(instance1, is(sameInstance(instance2)));
     }
 
     @Test
     public void gettingInstancesWithDifferentParametersShallDiffer() {
-        String instance1 = InstanceFactory.get(String.class, new Class[]{String.class}, "something1");
-        String instance2 = InstanceFactory.get(String.class, new Class[]{String.class}, "something2");
+        final String instance1 = InstanceFactory.get(String.class, new Class[]{String.class}, "something1");
+        final String instance2 = InstanceFactory.get(String.class, new Class[]{String.class}, "something2");
 
         assertThat(instance1, is(not(sameInstance(instance2))));
     }
 
     @Test
     public void setInstanceWithoutClassShouldWork() {
-        String instance = "test";
+        final String instance = "test";
         InstanceFactory.set(instance);
 
         assertThat(InstanceFactory.get(String.class), is(sameInstance(instance)));
@@ -135,7 +180,7 @@ public class InstanceFactoryTest {
 
     @Test
     public void setInstanceForClassShouldWork() {
-        String instance = "test";
+        final String instance = "test";
         InstanceFactory.set(instance, String.class);
 
         assertThat(InstanceFactory.get(String.class), is(sameInstance(instance)));
@@ -143,7 +188,7 @@ public class InstanceFactoryTest {
 
     @Test
     public void setInstanceForClassWithParametersShouldWork() {
-        String instance = "test";
+        final String instance = "test";
         InstanceFactory.set(instance, String.class, new Class[]{String.class}, "test");
 
         assertThat(InstanceFactory.get(String.class, new Class[]{String.class}, "test"), is(sameInstance(instance)));
@@ -151,35 +196,35 @@ public class InstanceFactoryTest {
 
     @Test
     public void removingInstanceAndGettingNewOneWorks() {
-        String instance = "test";
+        final String instance = "test";
         InstanceFactory.set(instance, String.class);
         InstanceFactory.remove(String.class);
 
-        String instance2 = InstanceFactory.get(String.class);
+        final String instance2 = InstanceFactory.get(String.class);
 
         assertThat(instance, is(not(sameInstance(instance2))));
     }
 
     @Test
     public void removingInstanceWithParametersAndGettingNewOneWorks() {
-        String instance = "test";
+        final String instance = "test";
         InstanceFactory.set(instance, String.class, new Class[]{String.class}, "test");
         InstanceFactory.remove(String.class, new Class[]{String.class}, "test");
 
-        String instance2 = InstanceFactory.get(String.class, new Class[]{String.class}, "test");
+        final String instance2 = InstanceFactory.get(String.class, new Class[]{String.class}, "test");
 
         assertThat(instance, is(not(sameInstance(instance2))));
     }
 
     @Test
     public void clearingInstanceFactoryShouldLeadToAllInstanceBeingCreatedFreshly() {
-        TestInstance integerInstance1 = InstanceFactory.get(TestInstance.class);
-        String stringInstance1 = InstanceFactory.get(String.class);
+        final TestInstance integerInstance1 = InstanceFactory.get(TestInstance.class);
+        final String stringInstance1 = InstanceFactory.get(String.class);
 
         InstanceFactory.clear();
 
-        TestInstance integerInstance2 = InstanceFactory.get(TestInstance.class);
-        String stringInstance2 = InstanceFactory.get(String.class);
+        final TestInstance integerInstance2 = InstanceFactory.get(TestInstance.class);
+        final String stringInstance2 = InstanceFactory.get(String.class);
 
         assertThat(integerInstance1, is(not(sameInstance(integerInstance2))));
         assertThat(stringInstance1, is(not(sameInstance(stringInstance2))));
@@ -187,14 +232,15 @@ public class InstanceFactoryTest {
 
     @Test
     public void instanceOfClassWithoutDefaultConstructorShouldLeadToNullValue() {
-        TestClassWithPrivateConstructor testClassWithPrivateConstructor = InstanceFactory.get(TestClassWithPrivateConstructor.class);
+        final TestClassWithPrivateConstructor testClassWithPrivateConstructor = InstanceFactory.get(TestClassWithPrivateConstructor.class);
 
         assertThat(testClassWithPrivateConstructor, is(nullValue()));
     }
 
     @Test
     public void instanceOfAbstractClassShouldBeNull() {
-        TestAbstractClass testAbstractClass = InstanceFactory.get(TestAbstractClass.class);
+        final TestAbstractClass testAbstractClass = InstanceFactory.get(TestAbstractClass.class);
+
         assertThat(testAbstractClass, is(nullValue()));
     }
 
@@ -205,7 +251,7 @@ public class InstanceFactoryTest {
 
     @Test
     public void shouldNotBeCreatedDirectly() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Constructor<InstanceFactory> constructor = InstanceFactory.class.getDeclaredConstructor();
+        final Constructor<InstanceFactory> constructor = InstanceFactory.class.getDeclaredConstructor();
         assertThat(Modifier.isPrivate(constructor.getModifiers()), is(equalTo(true)));
 
         constructor.setAccessible(true);
@@ -214,101 +260,22 @@ public class InstanceFactoryTest {
 
     @Test
     public void shallWorkWithStaticallyMarkedWithoutParameters() {
-        StaticallyMarkedA staticallyMarked1 = InstanceFactory.get(StaticallyMarkedA.class);
+        final StaticallyMarkedA staticallyMarked1 = InstanceFactory.get(StaticallyMarkedA.class);
         assertThat(staticallyMarked1, is(not(nullValue())));
 
-        StaticallyMarkedA staticallyMarked2 = InstanceFactory.get(StaticallyMarkedA.class);
+        final StaticallyMarkedA staticallyMarked2 = InstanceFactory.get(StaticallyMarkedA.class);
         assertThat(staticallyMarked2, is(equalTo(staticallyMarked2)));
     }
 
     @Test
     public void shallWorkWithStaticallyMarkedWithParameters() {
-        StaticallyMarkedB staticallyMarked1 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "something");
+        final StaticallyMarkedB staticallyMarked1 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "something");
         assertThat(staticallyMarked1, is(not(nullValue())));
 
-        StaticallyMarkedB staticallyMarked2 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "something");
+        final StaticallyMarkedB staticallyMarked2 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "something");
         assertThat(staticallyMarked2, is(equalTo(staticallyMarked2)));
 
-        StaticallyMarkedB staticallyMarked3 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "somethingElse");
+        final StaticallyMarkedB staticallyMarked3 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "somethingElse");
         assertThat(staticallyMarked2, is(not(equalTo(staticallyMarked3))));
     }
 }
-
-class InstanceToDynamicallyInitiliseV1 {
-    @Inject
-    private TestInstance value1;
-    private int value2;
-
-    public TestInstance getValue1() {
-        return value1;
-    }
-
-    public int getValue2() {
-        return value2;
-    }
-}
-class InstanceToDynamicallyInitiliseV2 {
-    private TestInstance value1;
-    @Inject
-    private int value2;
-
-    public TestInstance getValue1() {
-        return value1;
-    }
-
-    public int getValue2() {
-        return value2;
-    }
-}
-class InstanceToDynamicallyInitiliseV3 {
-    @Inject
-    private final TestInstance value1 = null;
-    private int value2;
-
-    public TestInstance getValue1() {
-        return value1;
-    }
-
-    public int getValue2() {
-        return value2;
-    }
-}
-
-class TestInstance {
-    private String test;
-
-    public TestInstance() {
-        this.test = "test";
-    }
-
-    @Override
-    public String toString() {
-        return "TestInstance{" +
-                "test='" + test + '\'' +
-                '}';
-    }
-}
-
-class TestClassWithPrivateConstructor {
-    private TestClassWithPrivateConstructor() {}
-}
-
-@Static
-class StaticallyMarkedA {
-    public static StaticallyMarkedA getInstance() {
-        return new StaticallyMarkedA();
-    }
-
-    private StaticallyMarkedA() {}
-}
-
-@Static(method = "getInstanceCustom")
-class StaticallyMarkedB {
-    public static StaticallyMarkedB getInstanceCustom(final String parameter) {
-        return new StaticallyMarkedB(parameter);
-    }
-
-    private StaticallyMarkedB(final String parameter) {}
-}
-
-abstract class TestAbstractClass {}
