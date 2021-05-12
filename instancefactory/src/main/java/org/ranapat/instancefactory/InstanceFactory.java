@@ -9,6 +9,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class InstanceFactory {
+    private static DebugFeedback debugFeedback;
+    public static void setDebugFeedback(final DebugFeedback _debugFeedback) {
+        debugFeedback = _debugFeedback;
+        debugFeedback.attachMap(map);
+    }
+    public static void resetDebugFeedback() {
+        debugFeedback = null;
+    }
+
     private static final Map<String, Object> map = Collections.synchronizedMap(new HashMap<String, Object>());
 
     private InstanceFactory() {
@@ -16,6 +25,10 @@ public final class InstanceFactory {
     }
 
     public static synchronized <T> T inject(final T instance) {
+        if (debugFeedback != null) {
+            debugFeedback.handleInject(instance);
+        }
+
         final Field[] fields = instance.getClass().getDeclaredFields();
         for (final Field field : fields) {
             if (field.isAnnotationPresent(Inject.class)) {
@@ -65,6 +78,9 @@ public final class InstanceFactory {
 
         if (map.containsKey(key)) {
             result = (T) map.get(key);
+            if (debugFeedback != null) {
+                debugFeedback.handleGet(key);
+            }
         } else {
             try {
                 if (_class.isAnnotationPresent(Static.class)) {
@@ -77,8 +93,13 @@ public final class InstanceFactory {
                 }
 
                 map.put(key, result);
+                if (debugFeedback != null) {
+                    debugFeedback.handlePut(key, result);
+                }
 
-                inject(result);
+                if (!_class.isAnnotationPresent(ManualInjectOnly.class)) {
+                    inject(result);
+                }
             } catch (
                     final InstantiationException
                             | IllegalAccessException
@@ -106,6 +127,9 @@ public final class InstanceFactory {
         final String key = KeyGenerator.generate(_class, types, values);
 
         map.put(key, value);
+        if (debugFeedback != null) {
+            debugFeedback.handlePut(key, value);
+        }
     }
 
     public static synchronized void remove(final Class _class) {
@@ -116,9 +140,15 @@ public final class InstanceFactory {
         final String key = KeyGenerator.generate(_class, types, values);
 
         map.remove(key);
+        if (debugFeedback != null) {
+            debugFeedback.handleRemove(key);
+        }
     }
 
     public static synchronized void clear() {
         map.clear();
+        if (debugFeedback != null) {
+            debugFeedback.handleClear();
+        }
     }
 }
