@@ -164,3 +164,19 @@ ClassC classC = InstanceFactory.get(ClassC.class);
 ClassC classC = Fi.get(ClassC.class);
 ```
 
+Dynamically Initialisable - Injections - Implicit inject - Custom type
+
+```java
+class ClassC {
+    @Inject(type = ExtraOnTopOfClassA.class)
+    private final ClassA value1 = null;
+
+    public ClassC() {
+        ...
+    }
+}
+
+ClassC classC = InstanceFactory.get(ClassC.class);
+// or
+ClassC classC = Fi.get(ClassC.class);
+```
