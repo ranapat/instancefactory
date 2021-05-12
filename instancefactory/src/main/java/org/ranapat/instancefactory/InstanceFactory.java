@@ -41,7 +41,6 @@ public final class InstanceFactory {
                     field.setAccessible(true);
                     field.set(instance, value);
                 } catch (final Exception e) {
-                    e.printStackTrace();
                     //
                 }
             }
@@ -77,9 +76,9 @@ public final class InstanceFactory {
                     result = _class.getDeclaredConstructor(types).newInstance(values);
                 }
 
-                inject(result);
-
                 map.put(key, result);
+
+                inject(result);
             } catch (
                     final InstantiationException
                             | IllegalAccessException
