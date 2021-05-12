@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 14 - 1.6.2.0 ] - 2021-05-12
+custom annotation types and weakreferences
+### Changes
+- custom-annotated-type
+ 
 ## [ 13 - 1.6.1.0 ] - 2021-05-12
 inject returns
 ### Changes
