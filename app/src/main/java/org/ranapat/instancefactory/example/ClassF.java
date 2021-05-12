@@ -2,18 +2,18 @@ package org.ranapat.instancefactory.example;
 
 import android.util.Log;
 
-import org.ranapat.instancefactory.DynamicallyInitialisable;
+import org.ranapat.instancefactory.Inject;
 import org.ranapat.instancefactory.InstanceFactory;
 
 public class ClassF implements Explainable {
     private final double random;
 
-    @DynamicallyInitialisable
+    @Inject
     private final ClassA classA = null;
 
     public ClassF() {
         // move at the end of the constructor, makes no sense to be here
-        InstanceFactory.initialise(this);
+        InstanceFactory.inject(this);
         random = Math.random();
 
         Log.d("### DEBUG ###", "Class F constructor " + random + " " + classA);

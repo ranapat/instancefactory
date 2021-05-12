@@ -2,12 +2,12 @@ package org.ranapat.instancefactory.example;
 
 import android.util.Log;
 
-import org.ranapat.instancefactory.DynamicallyInitialisable;
+import org.ranapat.instancefactory.Inject;
 
 public class ClassE implements Explainable {
     private final double random;
 
-    @DynamicallyInitialisable
+    @Inject
     private final ClassA classA = null;
 
     public ClassE() {

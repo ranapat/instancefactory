@@ -67,6 +67,8 @@ Set instance
 ```java
 ClassA classA = new ClassA();
 InstanceFactory.set(classA, ClassA.class);
+// or
+InstanceFactory.set(classA);
 
 ClassA classA1 = InstanceFactory.get(ClassA.class);
 ClassA classA2 = InstanceFactory.get(ClassA.class);
@@ -87,7 +89,7 @@ InstanceFactory.clear();
 Mark static class getter
 
 ```java
-@StaticallyInstantiable
+@Static
 public class ClassB {
     private static ClassB instance;
     public static ClassB getInstance() {
@@ -102,21 +104,63 @@ public class ClassB {
 }
 
 ClassB classB1 = InstanceFactory.get(ClassB.class);
+// or
+ClassB classB1 = Fi.get(ClassB.class);
 ```
 
-Dynamically Initialisable
+Mark static class getter - custom getInstance method
+
+```java
+@Static(method = "getInstanceCustom")
+public class ClassB {
+    private static ClassB instance;
+    public static ClassB getInstanceCustom() {
+        if (instance == null) {
+            instance = new ClassB();
+        }
+        return instance;
+    }
+    private ClassB() {
+        //
+    }
+}
+
+ClassB classB1 = InstanceFactory.get(ClassB.class);
+// or
+ClassB classB1 = Fi.get(ClassB.class);
+```
+
+Dynamically Initialisable - Injections - Explicit inject
 
 ```java
 class ClassC {
-    @DynamicallyInitialisable
+    @Inject
     private final ClassA value1 = null;
 
     public ClassC() {
         ...
 
-        InstanceFactory.initialise(this);
+        InstanceFactory.inject(this);
     }
 }
 
+ClassC classC = new Class();
+```
+
+Dynamically Initialisable - Injections - Implicit inject
+
+```java
+class ClassC {
+    @Inject
+    private final ClassA value1 = null;
+
+    public ClassC() {
+        ...
+    }
+}
+
+ClassC classC = InstanceFactory.get(ClassC.class);
+// or
+ClassC classC = Fi.get(ClassC.class);
 ```
 
