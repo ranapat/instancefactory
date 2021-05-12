@@ -201,3 +201,65 @@ ClassC classC = InstanceFactory.get(ClassC.class);
 // or
 ClassC classC = Fi.get(ClassC.class);
 ```
+
+Manual Inject only - prevent get to try to inject - you inject only if you want
+
+```java
+@ManualInjectOnly
+public class InstanceToDynamicallyInitiliseV7 {
+    @Inject
+    private TestInstance value1;
+    private int value2;
+
+    public InstanceToDynamicallyInitiliseV7() {
+        InstanceFactory.inject(this);
+    }
+
+    public TestInstance getValue1() {
+        return value1;
+    }
+
+    public int getValue2() {
+        return value2;
+    }
+}
+```
+
+Debug Feedback
+
+```java
+debugFeedback = new DebugFeedback() {
+    @Override
+    public void attachMap(final Map<String, Object> map) {
+        //
+    }
+
+    @Override
+    public void handlePut(final String key, final Object value) {
+        //
+    }
+
+    @Override
+    public void handleGet(final String key) {
+        //
+    }
+
+    @Override
+    public void handleRemove(final String key) {
+        //
+    }
+
+    @Override
+    public void handleClear() {
+        //
+    }
+
+    @Override
+    public void handleInject(final Object instance) {
+        //
+    }
+};
+
+InstanceFactory.setDebugFeedback(debugFeedback);
+InstanceFactory.resetDebugFeedback();
+```
