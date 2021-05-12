@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 13 - 1.6.1.0 ] - 2021-05-12
+inject returns
+### Changes
+- inject-returns
+ 
 ## [ 12 - 1.6.0.0 ] - 2021-05-12
 simplify names, inject on get
 ### Changes
