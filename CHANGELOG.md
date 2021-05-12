@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 12 - 1.6.0.0 ] - 2021-05-12
+simplify names, inject on get
+### Changes
+- simplify-annotations
+ 
 ## [ 11 - 1.5.1.0 ] - 2021-04-07
 set only by value
 ### Changes
