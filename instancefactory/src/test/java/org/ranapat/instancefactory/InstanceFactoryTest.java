@@ -8,6 +8,8 @@ import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV2;
 import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV3;
 import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV4;
 import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV5;
+import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV6;
+import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV7;
 import org.ranapat.instancefactory.tools.StaticallyMarkedA;
 import org.ranapat.instancefactory.tools.StaticallyMarkedB;
 import org.ranapat.instancefactory.tools.TestAbstractClass;
@@ -17,6 +19,8 @@ import org.ranapat.instancefactory.tools.TestInstance;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -137,6 +141,171 @@ public class InstanceFactoryTest {
         assertThat(instance44.getValue2(), is(equalTo(0)));
         assertThat(instance44.getValue1() instanceof TestInstance, is(equalTo(true)));
         assertThat(instance44.getValue1(), is(equalTo(instance33.getValue1())));
+    }
+
+    @Test
+    public void shouldInjectTwiceCase1() {
+        final AtomicReference<Integer> injects = new AtomicReference<>(0);
+
+        InstanceFactory.setDebugFeedback(new DebugFeedback() {
+            private Map<String, Object> map;
+
+            @Override
+            public void attachMap(final Map<String, Object> map) {
+                this.map = map;
+            }
+
+            @Override
+            public void handlePut(final String key, final Object value) {
+                //
+            }
+
+            @Override
+            public void handleGet(final String key) {
+                //
+            }
+
+            @Override
+            public void handleRemove(final String key) {
+                //
+            }
+
+            @Override
+            public void handleClear() {
+                //
+            }
+
+            @Override
+            public void handleInject(final Object instance) {
+                if (instance instanceof InstanceToDynamicallyInitiliseV1) {
+                    injects.set(injects.get() + 1);
+                }
+            }
+        });
+
+        final InstanceToDynamicallyInitiliseV1 instance1 = new InstanceToDynamicallyInitiliseV1();
+
+        assertThat(instance1.getValue1(), is(equalTo(null)));
+        assertThat(instance1.getValue2(), is(equalTo(0)));
+
+        InstanceFactory.inject(instance1);
+        InstanceFactory.inject(instance1);
+
+        assertThat(instance1.getValue1(), is(not(equalTo(null))));
+        assertThat(instance1.getValue2(), is(equalTo(0)));
+        assertThat(instance1.getValue1() instanceof TestInstance, is(equalTo(true)));
+
+        assertThat(injects.get(), is(equalTo(2)));
+
+        InstanceFactory.resetDebugFeedback();
+    }
+
+    @Test
+    public void shouldInjectTwiceCase2() {
+        final AtomicReference<Integer> injects = new AtomicReference<>(0);
+
+        InstanceFactory.setDebugFeedback(new DebugFeedback() {
+            private Map<String, Object> map;
+
+            @Override
+            public void attachMap(final Map<String, Object> map) {
+                this.map = map;
+            }
+
+            @Override
+            public void handlePut(final String key, final Object value) {
+                //
+            }
+
+            @Override
+            public void handleGet(final String key) {
+                //
+            }
+
+            @Override
+            public void handleRemove(final String key) {
+                //
+            }
+
+            @Override
+            public void handleClear() {
+                //
+            }
+
+            @Override
+            public void handleInject(final Object instance) {
+                if (instance instanceof InstanceToDynamicallyInitiliseV6) {
+                    injects.set(injects.get() + 1);
+                }
+            }
+        });
+
+        final InstanceToDynamicallyInitiliseV6 instance6 = InstanceFactory.get(InstanceToDynamicallyInitiliseV6.class);
+
+        assertThat(instance6.getValue1(), is(not(equalTo(null))));
+        assertThat(instance6.getValue2(), is(equalTo(0)));
+
+        assertThat(instance6.getValue1(), is(not(equalTo(null))));
+        assertThat(instance6.getValue2(), is(equalTo(0)));
+        assertThat(instance6.getValue1() instanceof TestInstance, is(equalTo(true)));
+
+        assertThat(injects.get(), is(equalTo(2)));
+
+        InstanceFactory.resetDebugFeedback();
+    }
+
+    @Test
+    public void shouldInjectOnlyOnce() {
+        final AtomicReference<Integer> injects = new AtomicReference<>(0);
+
+        InstanceFactory.setDebugFeedback(new DebugFeedback() {
+            private Map<String, Object> map;
+
+            @Override
+            public void attachMap(final Map<String, Object> map) {
+                this.map = map;
+            }
+
+            @Override
+            public void handlePut(final String key, final Object value) {
+                //
+            }
+
+            @Override
+            public void handleGet(final String key) {
+                //
+            }
+
+            @Override
+            public void handleRemove(final String key) {
+                //
+            }
+
+            @Override
+            public void handleClear() {
+                //
+            }
+
+            @Override
+            public void handleInject(final Object instance) {
+                if (instance instanceof InstanceToDynamicallyInitiliseV7) {
+                    injects.set(injects.get() + 1);
+                }
+            }
+        });
+
+        final InstanceToDynamicallyInitiliseV7 instance7 = InstanceFactory.get(InstanceToDynamicallyInitiliseV7.class);
+
+        assertThat(instance7.getValue1(), is(not(equalTo(null))));
+        assertThat(instance7.getValue2(), is(equalTo(0)));
+
+        assertThat(instance7.getValue1(), is(not(equalTo(null))));
+        assertThat(instance7.getValue2(), is(equalTo(0)));
+        assertThat(instance7.getValue1() instanceof TestInstance, is(equalTo(true)));
+
+        assertThat(injects.get(), is(equalTo(1)));
+
+        InstanceFactory.resetDebugFeedback();
     }
 
     @Test
