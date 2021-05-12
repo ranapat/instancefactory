@@ -2,6 +2,9 @@ package org.ranapat.instancefactory;
 
 import org.junit.After;
 import org.junit.Test;
+import org.ranapat.instancefactory.tools.StaticallyMarkedA;
+import org.ranapat.instancefactory.tools.TestAbstractClass;
+import org.ranapat.instancefactory.tools.TestClassWithPrivateConstructor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -23,35 +26,35 @@ public class FiTest {
 
     @Test
     public void gettingNotPresentInstanceShouldProduceNewInstance() {
-        String instance = Fi.get(String.class);
+        final String instance = Fi.get(String.class);
 
         assertThat(instance, is(not(nullValue())));
     }
 
     @Test
     public void gettingTwoTimesSameClassInstanceShouldReturnSameInstance() {
-        String instance1 = Fi.get(String.class);
-        String instance2 = Fi.get(String.class);
+        final String instance1 = Fi.get(String.class);
+        final String instance2 = Fi.get(String.class);
 
         assertThat(instance1, is(sameInstance(instance2)));
     }
 
     @Test
     public void instanceOfClassWithoutDefaultConstructorShouldLeadToNullValue() {
-        TestClassWithPrivateConstructor testClassWithPrivateConstructor = Fi.get(TestClassWithPrivateConstructor.class);
+        final TestClassWithPrivateConstructor testClassWithPrivateConstructor = Fi.get(TestClassWithPrivateConstructor.class);
 
         assertThat(testClassWithPrivateConstructor, is(nullValue()));
     }
 
     @Test
     public void instanceOfAbstractClassShouldBeNull() {
-        TestAbstractClass testAbstractClass = Fi.get(TestAbstractClass.class);
+        final TestAbstractClass testAbstractClass = Fi.get(TestAbstractClass.class);
         assertThat(testAbstractClass, is(nullValue()));
     }
 
     @Test
     public void shouldNotBeCreatedDirectly() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Constructor<Fi> constructor = Fi.class.getDeclaredConstructor();
+        final Constructor<Fi> constructor = Fi.class.getDeclaredConstructor();
         assertThat(Modifier.isPrivate(constructor.getModifiers()), is(equalTo(true)));
 
         constructor.setAccessible(true);
@@ -60,7 +63,7 @@ public class FiTest {
 
     @Test
     public void shallWorkWithStaticallyMarked() {
-        StaticallyMarkedA staticallyMarked = Fi.get(StaticallyMarkedA.class);
+        final StaticallyMarkedA staticallyMarked = Fi.get(StaticallyMarkedA.class);
         assertThat(staticallyMarked, is(not(nullValue())));
     }
 }
