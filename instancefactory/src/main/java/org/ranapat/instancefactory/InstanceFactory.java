@@ -14,7 +14,7 @@ public final class InstanceFactory {
         //
     }
 
-    public static synchronized void inject(final Object instance) {
+    public static synchronized <T> T inject(final T instance) {
         final Field[] fields = instance.getClass().getDeclaredFields();
         for (final Field field : fields) {
             if (field.isAnnotationPresent(Inject.class)) {
@@ -28,6 +28,8 @@ public final class InstanceFactory {
                 }
             }
         }
+
+        return instance;
     }
 
     @SuppressWarnings("unchecked")

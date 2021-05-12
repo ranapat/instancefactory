@@ -67,6 +67,34 @@ public class InstanceFactoryTest {
     }
 
     @Test
+    public void injectShallReturn() {
+        final InstanceToDynamicallyInitiliseV1 instance1 = new InstanceToDynamicallyInitiliseV1();
+        final InstanceToDynamicallyInitiliseV2 instance2 = new InstanceToDynamicallyInitiliseV2();
+        final InstanceToDynamicallyInitiliseV3 instance3 = new InstanceToDynamicallyInitiliseV3();
+
+        assertThat(instance1.getValue1(), is(equalTo(null)));
+        assertThat(instance2.getValue1(), is(equalTo(null)));
+        assertThat(instance3.getValue1(), is(equalTo(null)));
+        assertThat(instance1.getValue2(), is(equalTo(0)));
+        assertThat(instance2.getValue2(), is(equalTo(0)));
+        assertThat(instance3.getValue2(), is(equalTo(0)));
+
+        final InstanceToDynamicallyInitiliseV1 instance11 = InstanceFactory.inject(new InstanceToDynamicallyInitiliseV1());
+        final InstanceToDynamicallyInitiliseV2 instance22 = InstanceFactory.inject(new InstanceToDynamicallyInitiliseV2());
+        final InstanceToDynamicallyInitiliseV3 instance33 = InstanceFactory.inject(new InstanceToDynamicallyInitiliseV3());
+
+        assertThat(instance11.getValue1(), is(not(equalTo(null))));
+        assertThat(instance22.getValue1(), is(equalTo(null)));
+        assertThat(instance33.getValue1(), is(not(equalTo(null))));
+        assertThat(instance11.getValue2(), is(equalTo(0)));
+        assertThat(instance22.getValue2(), is(equalTo(0)));
+        assertThat(instance33.getValue2(), is(equalTo(0)));
+        assertThat(instance11.getValue1() instanceof TestInstance, is(equalTo(true)));
+        assertThat(instance33.getValue1() instanceof TestInstance, is(equalTo(true)));
+        assertThat(instance11.getValue1(), is(equalTo(instance33.getValue1())));
+    }
+
+    @Test
     public void gettingNotPresentInstanceShouldProduceNewInstance() {
         String instance = InstanceFactory.get(String.class);
 
