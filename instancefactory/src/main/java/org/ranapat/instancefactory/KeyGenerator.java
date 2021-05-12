@@ -12,6 +12,7 @@ class KeyGenerator {
         if (typesLength != valuesLength) {
             return null;
         }
+
         for (int i = 0; i < typesLength; ++i) {
             final Class type = types[i];
             final Object value = values[i];
