@@ -180,3 +180,24 @@ ClassC classC = InstanceFactory.get(ClassC.class);
 // or
 ClassC classC = Fi.get(ClassC.class);
 ```
+
+Dynamically Initialisable - Injections - Implicit inject - Custom type - Works with WeakReference
+
+```java
+class ClassC {
+    @Inject(type = ExtraOnTopOfClassA.class)
+    private final WeakReference<ClassA> value1 = null;
+
+    public ClassC() {
+        ...
+    }
+
+    public ClassA getValue1() {
+        return value1.get();
+    }
+}
+
+ClassC classC = InstanceFactory.get(ClassC.class);
+// or
+ClassC classC = Fi.get(ClassC.class);
+```
