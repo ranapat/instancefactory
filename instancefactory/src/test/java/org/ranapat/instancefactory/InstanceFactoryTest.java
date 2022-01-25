@@ -1,7 +1,16 @@
 package org.ranapat.instancefactory;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsNot.not;
+
 import org.junit.After;
 import org.junit.Test;
+import org.ranapat.instancefactory.tools.ClassWithFields1;
+import org.ranapat.instancefactory.tools.ClassWithFields2;
 import org.ranapat.instancefactory.tools.ExtraTestInstance;
 import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV1;
 import org.ranapat.instancefactory.tools.InstanceToDynamicallyInitiliseV2;
@@ -17,17 +26,12 @@ import org.ranapat.instancefactory.tools.TestClassWithPrivateConstructor;
 import org.ranapat.instancefactory.tools.TestInstance;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsNot.not;
 
 public class InstanceFactoryTest {
 
@@ -447,4 +451,28 @@ public class InstanceFactoryTest {
         final StaticallyMarkedB staticallyMarked3 = InstanceFactory.get(StaticallyMarkedB.class, new Class[]{String.class}, "somethingElse");
         assertThat(staticallyMarked2, is(not(equalTo(staticallyMarked3))));
     }
+
+    @Test
+    public void shallGetAllFields() {
+        final List<Field> fields1 = InstanceFactory.getDeclaredFields(ClassWithFields1.class);
+        locate(fields1, "java.lang.Integer");
+        locate(fields1, "java.lang.String");
+
+        final List<Field> fields2 = InstanceFactory.getDeclaredFields(ClassWithFields2.class);
+        locate(fields2, "java.lang.Integer");
+        locate(fields2, "java.lang.String");
+        locate(fields2, "java.lang.Float");
+    }
+
+    private void locate(final List<Field> fields, final String name) {
+        boolean located = false;
+        for (final Field field : fields) {
+            if (field.getType().getName().equals(name)) {
+                located = true;
+                break;
+            }
+        }
+        assertThat(located, is(equalTo(true)));
+    }
+
 }

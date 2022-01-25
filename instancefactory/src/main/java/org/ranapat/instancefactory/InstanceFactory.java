@@ -1,11 +1,15 @@
 package org.ranapat.instancefactory;
 
+import static java.util.Arrays.asList;
+
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class InstanceFactory {
@@ -29,7 +33,7 @@ public final class InstanceFactory {
             debugFeedback.handleInject(instance);
         }
 
-        final Field[] fields = instance.getClass().getDeclaredFields();
+        final List<Field> fields = getDeclaredFields(instance.getClass());
         for (final Field field : fields) {
             if (field.isAnnotationPresent(Inject.class)) {
                 final Inject injected = field.getAnnotation(Inject.class);
@@ -150,5 +154,18 @@ public final class InstanceFactory {
         if (debugFeedback != null) {
             debugFeedback.handleClear();
         }
+    }
+
+    public static synchronized List<Field> getDeclaredFields(final Class<?> _class) {
+        final List<Field> fields = new ArrayList<>();
+
+        fields.addAll(asList(_class.getDeclaredFields()));
+
+        final Class<?> _superclass = _class.getSuperclass();
+        if (_superclass != null) {
+            fields.addAll(getDeclaredFields(_superclass));
+        }
+
+        return fields;
     }
 }
