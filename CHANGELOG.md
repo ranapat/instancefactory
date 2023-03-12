@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 18 - 1.6.6.0 ] - 2023-03-12
+try to release only the library in the build pipeline
+### Changes
 ## [ 17 - 1.6.5.0 ] - 2023-03-12
 try to release for kotlin
 ### Summary
