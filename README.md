@@ -2,6 +2,8 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/ranapat/instancefactory/badge.svg?branch=master)](https://coveralls.io/github/ranapat/instancefactory?branch=master)
 
+*NEW* It supports Kotlin.
+
 Android java library for keeping instances
 
 You can keep instances of classes with or without parameters in constructors and different parameter sets will be kept separately.
@@ -48,6 +50,21 @@ You can find the outputs here:
 `./instancefactory/build/reports/tests/testReleaseUnitTestCoverage/index.html`
 
 ### Examples
+
+Kotlin lazy
+
+```kotlin
+private val instanceH1: ClassH by lazyInject()
+private val classJ5: ClassJ by lazyInject("param1", param2, param3, ...)
+```
+
+Kotlin direct
+
+```kotlin
+val classJ1 = inject<ClassJ>()
+val classJ2:ClassJ = inject()
+val classJ3:ClassJ = inject("passed")
+```
 
 Fast access
 
