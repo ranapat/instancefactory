@@ -4,6 +4,7 @@ All notable changes to the project will be documented in this file.
 ## [ 19 - 1.6.7.0 ] - 2023-03-12
 set a bit older version of kotlin
 ### Changes
+
 ## [ 18 - 1.6.6.0 ] - 2023-03-12
 try to release only the library in the build pipeline
 ### Changes
