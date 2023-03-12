@@ -4,17 +4,17 @@ import android.util.Log;
 
 public class ClassC implements Explainable {
     private final double random;
-    private final int integer;
+    private final String string;
 
-    public ClassC(final Integer integer) {
+    public ClassC(final String string) {
         random = Math.random();
-        this.integer = integer;
+        this.string = string;
 
-        Log.d("### DEBUG ###", "new instance of C with " + integer);
+        Log.d("### DEBUG ###", "new instance of C with " + string);
     }
 
     @Override
     public void explain() {
-        Log.d("### DEBUG ###", "Instance of Class C " + random + " " + integer);
+        Log.d("### DEBUG ###", "Instance of Class C " + random + " " + string);
     }
 }
