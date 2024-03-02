@@ -25,14 +25,14 @@ public class FiTest {
     }
 
     @Test
-    public void gettingNotPresentInstanceShouldProduceNewInstance() {
+    public void gettingNotPresentInstanceProducesNewInstance() {
         final String instance = Fi.get(String.class);
 
         assertThat(instance, is(not(nullValue())));
     }
 
     @Test
-    public void gettingTwoTimesSameClassInstanceShouldReturnSameInstance() {
+    public void gettingTwoTimesSameClassInstanceReturnsSameInstance() {
         final String instance1 = Fi.get(String.class);
         final String instance2 = Fi.get(String.class);
 
@@ -40,14 +40,14 @@ public class FiTest {
     }
 
     @Test
-    public void instanceOfClassWithoutDefaultConstructorShouldLeadToNullValue() {
+    public void instanceOfClassWithoutDefaultConstructorLeadsToNullValue() {
         final TestClassWithPrivateConstructor testClassWithPrivateConstructor = Fi.get(TestClassWithPrivateConstructor.class);
 
         assertThat(testClassWithPrivateConstructor, is(nullValue()));
     }
 
     @Test
-    public void instanceOfAbstractClassShouldBeNull() {
+    public void instanceOfAbstractClassLeadsToNull() {
         final TestAbstractClass testAbstractClass = Fi.get(TestAbstractClass.class);
         assertThat(testAbstractClass, is(nullValue()));
     }
@@ -62,7 +62,7 @@ public class FiTest {
     }
 
     @Test
-    public void shallWorkWithStaticallyMarked() {
+    public void staticallyMarked() {
         final StaticallyMarkedA staticallyMarked = Fi.get(StaticallyMarkedA.class);
         assertThat(staticallyMarked, is(not(nullValue())));
     }
