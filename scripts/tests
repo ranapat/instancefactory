@@ -1,0 +1,11 @@
+#!/bin/bash
+
+function _nn() {
+    osascript -e "display notification \"$1\" with title \"$2\" subtitle \"$3\""
+}
+
+./gradlew clean testDebugUnitTestCoverage && _nn 'all tasks complete' 'Instance Factory' 'tests with coverage' && say -v Fred all tasks complete. || say -v Fred something went wrong.
+
+cp assets/*.ico instancefactory/build/reports/jacoco/testDebugUnitTestCoverage/html/
+sed -i -E "s/100[^%]*%/<img src="ok\.ico" height="10" \/>/g" instancefactory/build/reports/jacoco/testDebugUnitTestCoverage/html/index.html
+sed -i -E "s/n\/a/<img src="pass\.ico" height="10" \/>/g" instancefactory/build/reports/jacoco/testDebugUnitTestCoverage/html/index.html
