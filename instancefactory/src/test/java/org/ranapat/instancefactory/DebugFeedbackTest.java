@@ -39,6 +39,11 @@ public class DebugFeedbackTest {
             }
 
             @Override
+            public void handleClearAll() {
+                //
+            }
+
+            @Override
             public void handleInject(final Object instance) {
                 //
             }
@@ -63,6 +68,8 @@ public class DebugFeedbackTest {
         InstanceFactory.get(TestInstance.class);
         InstanceFactory.remove(TestInstance.class);
         InstanceFactory.inject(new InstanceToDynamicallyInitiliseV1());
+        InstanceFactory.clear();
+        InstanceFactory.clearAll();
     }
 
 }

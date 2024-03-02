@@ -8,5 +8,6 @@ public interface DebugFeedback {
     void handleGet(final String key);
     void handleRemove(final String key);
     void handleClear(final Namespace namespace);
+    void handleClearAll();
     void handleInject(final Object instance);
 }

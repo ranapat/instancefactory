@@ -70,6 +70,10 @@ public final class InstanceFactory {
         return get(_class, new Class[]{});
     }
 
+    public static synchronized <T> T get(final Namespace namespace, final Class<T> _class) {
+        return get(namespace, _class, new Class[]{});
+    }
+
     public static synchronized <T> T get(final Class<T> _class, final Class[] types, final Object... values) {
         return get(Namespace.DEFAULT, _class, types, values);
     }
@@ -192,6 +196,14 @@ public final class InstanceFactory {
             if (debugFeedback != null) {
                 debugFeedback.handleClear(namespace);
             }
+        }
+    }
+
+    public static synchronized void clearAll() {
+        namespaces.clear();
+
+        if (debugFeedback != null) {
+            debugFeedback.handleClearAll();
         }
     }
 

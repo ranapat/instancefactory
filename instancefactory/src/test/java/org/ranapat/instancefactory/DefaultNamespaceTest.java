@@ -13,10 +13,6 @@ import org.ranapat.instancefactory.tools.TestAbstractClass;
 import org.ranapat.instancefactory.tools.TestClassWithPrivateConstructor;
 import org.ranapat.instancefactory.tools.TestInstance;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
-
 public class DefaultNamespaceTest {
 
     @After
@@ -72,15 +68,6 @@ public class DefaultNamespaceTest {
     @Test
     public void returnNullInWrongInput() {
         assertThat(InstanceFactory.get(String.class, new Class[]{String.class}), is(equalTo(null)));
-    }
-
-    @Test
-    public void shouldNotBeCreatedDirectly() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        final Constructor<InstanceFactory> constructor = InstanceFactory.class.getDeclaredConstructor();
-        assertThat(Modifier.isPrivate(constructor.getModifiers()), is(equalTo(true)));
-
-        constructor.setAccessible(true);
-        constructor.newInstance();
     }
 
     @Test

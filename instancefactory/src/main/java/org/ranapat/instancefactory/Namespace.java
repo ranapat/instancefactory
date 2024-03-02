@@ -1,5 +1,5 @@
 package org.ranapat.instancefactory;
 
-public enum Namespace {
-    DEFAULT
+public abstract class Namespace {
+    public final static Namespace DEFAULT = new Namespace() {};
 }

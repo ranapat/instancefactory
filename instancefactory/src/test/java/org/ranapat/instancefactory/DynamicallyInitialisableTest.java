@@ -167,6 +167,11 @@ public class DynamicallyInitialisableTest {
             }
 
             @Override
+            public void handleClearAll() {
+                //
+            }
+
+            @Override
             public void handleInject(final Object instance) {
                 if (instance instanceof InstanceToDynamicallyInitiliseV1) {
                     injects.set(injects.get() + 1);
@@ -224,6 +229,11 @@ public class DynamicallyInitialisableTest {
             }
 
             @Override
+            public void handleClearAll() {
+                //
+            }
+
+            @Override
             public void handleInject(final Object instance) {
                 if (instance instanceof InstanceToDynamicallyInitiliseV6) {
                     injects.set(injects.get() + 1);
@@ -274,6 +284,11 @@ public class DynamicallyInitialisableTest {
 
             @Override
             public void handleClear(final Namespace namespace) {
+                //
+            }
+
+            @Override
+            public void handleClearAll() {
                 //
             }
 
