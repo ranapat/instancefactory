@@ -31,3 +31,33 @@ inline fun <reified T> inject(vararg varargs: Any): T {
 inline fun <reified T> weakInject(): WeakReference<T> {
     return WeakReference(Fi.get(T::class.java))
 }
+
+inline fun <reified T> lazyGet() : Lazy<T> = lazy {
+    Fi.get(T::class.java)
+}
+
+inline fun <reified T> lazyGet(vararg varargs: Any) : Lazy<T> = lazy {
+    val types = varargs.map { it.javaClass }.toTypedArray()
+    val values = varargs.mapIndexed { index, value -> types[index].cast(value)}.toTypedArray()
+
+    InstanceFactory.get(T::class.java, types, *values)
+}
+
+inline fun <reified T> lazyWeakGet(): Lazy<WeakReference<T>> = lazy {
+    WeakReference(Fi.get(T::class.java))
+}
+
+inline fun <reified T> get(): T {
+    return Fi.get(T::class.java)
+}
+
+inline fun <reified T> get(vararg varargs: Any): T {
+    val types = varargs.map { it.javaClass }.toTypedArray()
+    val values = varargs.mapIndexed { index, value -> types[index].cast(value)}.toTypedArray()
+
+    return InstanceFactory.get(T::class.java, types, *values)
+}
+
+inline fun <reified T> weakGet(): WeakReference<T> {
+    return WeakReference(Fi.get(T::class.java))
+}
