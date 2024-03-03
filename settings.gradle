@@ -1,5 +1,2 @@
-if (!System.env.JITPACK)
-    include ':app'
-include ':instancefactory'
-
+include ':app', ':instancefactory'
 rootProject.name='InstanceFactory with Examples'
