@@ -37,10 +37,12 @@ public final class InstanceFactory {
         for (final Field field : fields) {
             if (field.isAnnotationPresent(Inject.class)) {
                 final Inject injected = field.getAnnotation(Inject.class);
+                final String injectedNamespace = injected.namespace();
                 final Class<?> injectedType = injected.type();
                 final Class<?> fieldType = field.getType();
 
                 try {
+                    final Namespace namespace = Registry.get(injectedNamespace);
                     final Class<?> type;
                     if (injectedType != void.class) {
                         type = injectedType;
@@ -50,9 +52,9 @@ public final class InstanceFactory {
 
                     final Object value;
                     if (fieldType == WeakReference.class) {
-                        value = new WeakReference<>(get(type));
+                        value = new WeakReference<>(get(namespace, type));
                     } else {
-                        value = get(type);
+                        value = get(namespace, type);
                     }
 
                     field.setAccessible(true);
