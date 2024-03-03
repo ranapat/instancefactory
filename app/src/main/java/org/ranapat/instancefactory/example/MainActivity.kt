@@ -3,17 +3,21 @@ package org.ranapat.instancefactory.example
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.ranapat.instancefactory.InstanceFactory
+import org.ranapat.instancefactory.Namespace
 import org.ranapat.instancefactory.get
 import org.ranapat.instancefactory.inject
 import org.ranapat.instancefactory.lazyGet
 import org.ranapat.instancefactory.lazyInject
 
 class MainActivity : AppCompatActivity() {
+    private val namespaceA: Namespace = object : Namespace() {}
+
     private val instanceH1: ClassH by lazyInject()
     private val instanceH2: ClassH = inject()
 
     private val classJ5: ClassJ by lazyInject("passedByLazy", ClassJ.ClassJA())
     private val classK5: ClassK by lazyGet("passedByLazy", ClassK.ClassKA())
+    private val classL5: ClassL by lazyGet("passedByLazy", ClassL.ClassLA())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         examplesH()
         examplesJ()
         examplesK()
+        examplesL()
     }
 
     private fun examplesA() {
@@ -136,5 +141,18 @@ class MainActivity : AppCompatActivity() {
         classK3.test()
         classK4.test()
         classK5.test()
+    }
+
+    private fun examplesL() {
+        val classL1 = get<ClassL>(namespaceA)
+        val classL2:ClassL = get(namespaceA)
+        val classL3:ClassL = get(namespaceA, "passed")
+        val classL4:ClassL = get(namespaceA, "passed", ClassL.ClassLA())
+
+        classL1.test()
+        classL2.test()
+        classL3.test()
+        classL4.test()
+        classL5.test()
     }
 }

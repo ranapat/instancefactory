@@ -18,38 +18,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNot.not;
 
 public class FiTest {
+    private static final Namespace defaultNamespace = Namespace.DEFAULT;
+    private static final Namespace namespaceA = new Namespace() {};
+    private static final Namespace namespaceB = new Namespace() {};
 
     @After
     public void after() {
-        InstanceFactory.clear();
-    }
-
-    @Test
-    public void gettingNotPresentInstanceProducesNewInstance() {
-        final String instance = Fi.get(String.class);
-
-        assertThat(instance, is(not(nullValue())));
-    }
-
-    @Test
-    public void gettingTwoTimesSameClassInstanceReturnsSameInstance() {
-        final String instance1 = Fi.get(String.class);
-        final String instance2 = Fi.get(String.class);
-
-        assertThat(instance1, is(sameInstance(instance2)));
-    }
-
-    @Test
-    public void instanceOfClassWithoutDefaultConstructorLeadsToNullValue() {
-        final TestClassWithPrivateConstructor testClassWithPrivateConstructor = Fi.get(TestClassWithPrivateConstructor.class);
-
-        assertThat(testClassWithPrivateConstructor, is(nullValue()));
-    }
-
-    @Test
-    public void instanceOfAbstractClassLeadsToNull() {
-        final TestAbstractClass testAbstractClass = Fi.get(TestAbstractClass.class);
-        assertThat(testAbstractClass, is(nullValue()));
+        InstanceFactory.clearAll();
     }
 
     @Test
@@ -62,8 +37,92 @@ public class FiTest {
     }
 
     @Test
-    public void staticallyMarked() {
+    public void gettingNotPresentInstanceProducesNewInstanceDefaultNamespace() {
+        final String instance = Fi.get(String.class);
+
+        assertThat(instance, is(not(nullValue())));
+    }
+
+    @Test
+    public void gettingTwoTimesSameClassInstanceReturnsSameInstanceDefaultNamespace() {
+        final String instance1 = Fi.get(String.class);
+        final String instance2 = Fi.get(String.class);
+
+        assertThat(instance1, is(sameInstance(instance2)));
+    }
+
+    @Test
+    public void instanceOfClassWithoutDefaultConstructorLeadsToNullValueDefaultNamespace() {
+        final TestClassWithPrivateConstructor testClassWithPrivateConstructor = Fi.get(TestClassWithPrivateConstructor.class);
+
+        assertThat(testClassWithPrivateConstructor, is(nullValue()));
+    }
+
+    @Test
+    public void instanceOfAbstractClassLeadsToNullDefaultNamespace() {
+        final TestAbstractClass testAbstractClass = Fi.get(TestAbstractClass.class);
+        assertThat(testAbstractClass, is(nullValue()));
+    }
+
+    @Test
+    public void staticallyMarkedDefaultNamespace() {
         final StaticallyMarkedA staticallyMarked = Fi.get(StaticallyMarkedA.class);
+        assertThat(staticallyMarked, is(not(nullValue())));
+    }
+
+    @Test
+    public void gettingNotPresentInstanceProducesNewInstanceMultipleNamespaces() {
+        final String instance1 = Fi.get(defaultNamespace, String.class);
+
+        assertThat(instance1, is(not(nullValue())));
+
+        final String instance2 = Fi.get(namespaceA, String.class);
+
+        assertThat(instance2, is(not(nullValue())));
+
+        final String instance3 = Fi.get(namespaceB, String.class);
+
+        assertThat(instance3, is(not(nullValue())));
+
+        assertThat(instance1, is(not(sameInstance(instance2))));
+        assertThat(instance1, is(not(sameInstance(instance3))));
+        assertThat(instance2, is(not(sameInstance(instance3))));
+    }
+
+    @Test
+    public void gettingTwoTimesSameClassInstanceReturnsSameInstanceMultipleNamespaces() {
+        final String instance1 = Fi.get(defaultNamespace, String.class);
+        final String instance2 = Fi.get(defaultNamespace, String.class);
+
+        assertThat(instance1, is(sameInstance(instance2)));
+
+        final String instance3 = Fi.get(namespaceA, String.class);
+        final String instance4 = Fi.get(namespaceA, String.class);
+
+        assertThat(instance3, is(sameInstance(instance4)));
+
+        final String instance5 = Fi.get(namespaceB, String.class);
+        final String instance6 = Fi.get(namespaceB, String.class);
+
+        assertThat(instance5, is(sameInstance(instance6)));
+    }
+
+    @Test
+    public void instanceOfClassWithoutDefaultConstructorLeadsToNullValueMultipleNamespaces() {
+        final TestClassWithPrivateConstructor testClassWithPrivateConstructor = Fi.get(defaultNamespace, TestClassWithPrivateConstructor.class);
+
+        assertThat(testClassWithPrivateConstructor, is(nullValue()));
+    }
+
+    @Test
+    public void instanceOfAbstractClassLeadsToNullMultipleNamespaces() {
+        final TestAbstractClass testAbstractClass = Fi.get(defaultNamespace, TestAbstractClass.class);
+        assertThat(testAbstractClass, is(nullValue()));
+    }
+
+    @Test
+    public void staticallyMarkedMultipleNamespaces() {
+        final StaticallyMarkedA staticallyMarked = Fi.get(defaultNamespace, StaticallyMarkedA.class);
         assertThat(staticallyMarked, is(not(nullValue())));
     }
 }
