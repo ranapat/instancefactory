@@ -132,7 +132,7 @@ public class DefaultNamespaceTest {
     }
 
     @Test
-    public void removingInstanceAndGettingNewOneWorks() {
+    public void removingInstanceAndGettingNewOne() {
         final String instance = "test";
         InstanceFactory.set(instance, String.class);
         InstanceFactory.remove(String.class);
@@ -143,7 +143,7 @@ public class DefaultNamespaceTest {
     }
 
     @Test
-    public void removingInstanceWithParametersAndGettingNewOneWorks() {
+    public void removingInstanceWithParametersAndGettingNewOne() {
         final String instance = "test";
         InstanceFactory.set(instance, String.class, new Class[]{String.class}, "test");
         InstanceFactory.remove(String.class, new Class[]{String.class}, "test");

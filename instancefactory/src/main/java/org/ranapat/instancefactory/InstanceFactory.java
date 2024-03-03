@@ -138,8 +138,16 @@ public final class InstanceFactory {
         set(value, value.getClass());
     }
 
+    public static synchronized void set(final Namespace namespace, final Object value) {
+        set(namespace, value, value.getClass());
+    }
+
     public static synchronized void set(final Object value, final Class _class) {
         set(value, _class, new Class[]{});
+    }
+
+    public static synchronized void set(final Namespace namespace, final Object value, final Class _class) {
+        set(namespace, value, _class, new Class[]{});
     }
 
     public static synchronized void set(final Object value, final Class _class, final Class[] types, final Object... values) {
@@ -162,6 +170,10 @@ public final class InstanceFactory {
 
     public static synchronized void remove(final Class _class) {
         remove(_class, new Class[]{});
+    }
+
+    public static synchronized void remove(final Namespace namespace, final Class _class) {
+        remove(namespace, _class, new Class[]{});
     }
 
     public static synchronized void remove(final Class _class, final Class[] types, final Object... values) {
