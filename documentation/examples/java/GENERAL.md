@@ -1,4 +1,4 @@
-# InstanceFactory offers several `Java` ways to get instances
+# InstanceFactory offers several `Java` ways to work with instances
 
 Java Fast access
 
