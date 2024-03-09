@@ -1,6 +1,7 @@
 # InstanceFactory
 
 [![Coverage Status](https://coveralls.io/repos/github/ranapat/instancefactory/badge.svg?branch=master)](https://coveralls.io/github/ranapat/instancefactory?branch=master)
+[![](https://jitci.com/gh/ranapat/instancefactory/svg)](https://jitci.com/gh/ranapat/instancefactory)
 
 Android Java / Kotlin library for keeping instances.
 
@@ -25,7 +26,6 @@ Easy injection pattern can be seen [here](./app/src/main/java/org/ranapat/instan
 
 ### Get it from jitpack
 [![](https://jitpack.io/v/ranapat/instancefactory.svg)](https://jitpack.io/#ranapat/instancefactory)
-[![](https://jitci.com/gh/ranapat/instancefactory/svg)](https://jitci.com/gh/ranapat/instancefactory)
 
 ### Get it from source
 Check out the repo and have fun
