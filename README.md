@@ -76,7 +76,7 @@ private val classJ5: ClassJ by lazyGet("param1", param2, param3, ...)
 // or
 private val namespaceA: Namespace = object : Namespace() {}
 private val instanceH1: ClassH by lazyGet(namespaceA)
-private val classJ5: ClassJ by lazyGet(namespaceA"param1", param2, param3, ...)
+private val classJ5: ClassJ by lazyGet(namespaceA, "param1", param2, param3, ...)
 ```
 
 Kotlin direct
