@@ -20,7 +20,7 @@ Class(String 'one') != Class(String 'two')
 
 ## Live example
 
-Easy injection pattern can be seen [here](./app/src/main/java/org/ranapat/instancefactory/example)
+Easy injection pattern can be seen [here](./app/src/main/java/org/ranapat/instancefactory/example).
 
 ## How to get it
 
@@ -28,7 +28,7 @@ Easy injection pattern can be seen [here](./app/src/main/java/org/ranapat/instan
 [![](https://jitpack.io/v/ranapat/instancefactory.svg)](https://jitpack.io/#ranapat/instancefactory)
 
 ### Get it from source
-Check out the repo and have fun
+Check out the repo and have fun.
 
 ## Requirements
 * Java 11
