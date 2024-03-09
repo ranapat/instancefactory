@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private val classJ5: ClassJ by lazyInject("passedByLazy", ClassJ.ClassJA())
     private val classK5: ClassK by lazyGet("passedByLazy", ClassK.ClassKA())
-    private val classL5: ClassL by lazyGet("passedByLazy", ClassL.ClassLA())
+    private val classL5: ClassL by lazyGet(namespaceA, "passedByLazy", ClassL.ClassLA())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

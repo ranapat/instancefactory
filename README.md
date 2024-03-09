@@ -8,9 +8,18 @@ You can keep instances of classes with or without parameters in constructors and
 
 Class(String 'one') != Class(String 'two')
 
+## Features
+
+- auto creating and keeping instances by classname
+- auto creating and keeping instances by classname and parameters
+- auto creating and keeping instances by classname, parameters and namespaces *new*
+- setting instances manually that can be reused later
+- runtime clearing of piled up instances for advanced memory management
+- lazy kotlin helpers
+
 ## Live example
 
-Easy injection pattern can be seen [here](https://github.com/ranapat/instancefactory/tree/master/app/src/main/java/org/ranapat/instancefactory/example)
+Easy injection pattern can be seen [here](./app/src/main/java/org/ranapat/instancefactory/example)
 
 ## How to get it
 
@@ -47,7 +56,7 @@ You can find the outputs here:
 - for the unit test summary
 `./instancefactory/build/reports/tests/testDebugUnitTestCoverage/index.html` or `./instancefactory/build/reports/tests/testReleaseUnitTestCoverage/index.html` 
 
-### Examples
+## Quick how-to
 
 Kotlin lazy
 
@@ -98,4 +107,4 @@ static final Namespace namespaceA = new Namespace() {};
 ClassA classA = InstanceFactory.get(namespaceA, ClassA.class);
 ```
 
-For more examples go [here](./documentation/examples/index.md)
+For more check [here](./documentation/examples/index.md).
