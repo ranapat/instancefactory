@@ -27,6 +27,9 @@ Easy injection pattern can be seen [here](./app/src/main/java/org/ranapat/instan
 [![](https://jitpack.io/v/ranapat/instancefactory.svg)](https://jitpack.io/#ranapat/instancefactory)
 [![](https://jitci.com/gh/ranapat/instancefactory/svg)](https://jitci.com/gh/ranapat/instancefactory)
 
+### Get it from source
+Check out the repo and have fun
+
 ## Requirements
 * Java 11
 * Android SDK
@@ -55,6 +58,10 @@ You can find the outputs here:
 `./instancefactory/build/reports/jacoco/testDebugUnitTestCoverage/html/index.html` or `./instancefactory/build/reports/jacoco/testReleaseUnitTestCoverage/html/index.html`
 - for the unit test summary
 `./instancefactory/build/reports/tests/testDebugUnitTestCoverage/index.html` or `./instancefactory/build/reports/tests/testReleaseUnitTestCoverage/index.html` 
+
+## Join the project
+If you find this project interesting check out the ongoing
+[issues](https://github.com/ranapat/instancefactory/issues) and add your ides.
 
 ## Quick how-to
 
