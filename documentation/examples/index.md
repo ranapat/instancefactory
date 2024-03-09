@@ -13,7 +13,7 @@ Namespace examples are available for
 and
 [Kotlin](./kotlin/namespaces.md)
 
-Debugging examples are available for
-[Java](./java/debugging.md)
+Debug Feedback examples are available for
+[Java](./java/debug_feedback.md)
 and
-[Kotlin](./kotlin/debugging.md)
+[Kotlin](./kotlin/debug_feedback.md)

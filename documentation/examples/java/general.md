@@ -4,18 +4,12 @@ Java Fast access
 
 ```java
 Fi.get(ClassA.class);
-// or
-static final Namespace namespaceA = new Namespace() {};
-Fi.get(namespaceA, ClassA.class);
 ```
 
 Java Detailed access
 
 ```java
 ClassA classA = InstanceFactory.get(ClassA.class);
-// or
-static final Namespace namespaceA = new Namespace() {};
-ClassA classA = InstanceFactory.get(namespaceA, ClassA.class);
 ```
 
 Set instance
@@ -25,37 +19,21 @@ ClassA classA = new ClassA();
 InstanceFactory.set(classA, ClassA.class);
 // or
 InstanceFactory.set(classA);
-// or
-static final Namespace namespaceA = new Namespace() {};
-InstanceFactory.set(namespaceA, classA);
-// or
-static final Namespace namespaceA = new Namespace() {};
-InstanceFactory.set(namespaceA, classA, ClassA.class);
 
 ClassA classA1 = InstanceFactory.get(ClassA.class);
 ClassA classA2 = InstanceFactory.get(ClassA.class);
-// or
-static final Namespace namespaceA = new Namespace() {};
-ClassA classA1 = InstanceFactory.get(namespaceA, ClassA.class);
-ClassA classA2 = InstanceFactory.get(namespaceA, ClassA.class);
 ```
 
 Remove instance
 
 ```java
 InstanceFactory.remove(ClassA.class);
-// or
-static final Namespace namespaceA = new Namespace() {};
-InstanceFactory.remove(namespaceA, ClassA.class);
 ```
 
 Clear all cached instances
 
 ```java
 InstanceFactory.clear();
-static final Namespace namespaceA = new Namespace() {};
-InstanceFactory.clear(namespaceA);
-InstanceFactory.clearAll();
 ```
 
 Mark static class getter
@@ -195,43 +173,4 @@ public class InstanceToDynamicallyInitiliseV7 {
         return value2;
     }
 }
-```
-
-Debug Feedback
-
-```java
-debugFeedback = new DebugFeedback() {
-    @Override
-    public void attachMap(final Map<String, Object> map) {
-        //
-    }
-
-    @Override
-    public void handlePut(final String key, final Object value) {
-        //
-    }
-
-    @Override
-    public void handleGet(final String key) {
-        //
-    }
-
-    @Override
-    public void handleRemove(final String key) {
-        //
-    }
-
-    @Override
-    public void handleClear() {
-        //
-    }
-
-    @Override
-    public void handleInject(final Object instance) {
-        //
-    }
-};
-
-InstanceFactory.setDebugFeedback(debugFeedback);
-InstanceFactory.resetDebugFeedback();
 ```
