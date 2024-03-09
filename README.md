@@ -98,4 +98,4 @@ static final Namespace namespaceA = new Namespace() {};
 ClassA classA = InstanceFactory.get(namespaceA, ClassA.class);
 ```
 
-For more examples go [here](https://github.com/ranapat/instancefactory/blob/feature/namespaces/documentation/examples/java/GENERAL.md)
+For more examples go [here](https://github.com/ranapat/instancefactory/tree/master/documentation/examples/index.md)
