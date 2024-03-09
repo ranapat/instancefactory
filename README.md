@@ -115,3 +115,7 @@ ClassA classA = InstanceFactory.get(namespaceA, ClassA.class);
 ```
 
 For more check [here](./documentation/examples/index.md).
+
+## External assets / tools being used in repo
+
+- [assets](https://www.iconpacks.net/)
