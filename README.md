@@ -13,7 +13,7 @@ Class(String 'one') != Class(String 'two')
 
 - auto creating and keeping instances by classname
 - auto creating and keeping instances by classname and parameters
-- ![new](./documentation/assets/new.svg  =16x16) auto creating and keeping instances by classname, parameters and namespaces
+- <img src="./documentation/assets/new.svg" alt="new" width="16" height="16" /> auto creating and keeping instances by classname, parameters and namespaces
 - setting instances manually that can be reused later
 - runtime clearing of piled up instances for advanced memory management
 - lazy kotlin helpers
