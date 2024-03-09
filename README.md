@@ -13,7 +13,7 @@ Class(String 'one') != Class(String 'two')
 
 - auto creating and keeping instances by classname
 - auto creating and keeping instances by classname and parameters
-- auto creating and keeping instances by classname, parameters and namespaces ![new](./documentation/assets/new_24x24.png)
+- auto creating and keeping instances by classname, parameters and namespaces ![new](./documentation/assets/new_16x16.png)
 - setting instances manually that can be reused later
 - runtime clearing of piled up instances for advanced memory management
 - lazy kotlin helpers
