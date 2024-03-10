@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 22 - 1.7.2.0 ] - 2024-03-10
+basic Stats implementation
+### Changes
+- info-fetching
+ 
 ## [ 21 - 1.7.1.0 ] - 2024-03-10
 the same as previous - experiments with jitpack
 ### Changes
