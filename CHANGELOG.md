@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 21 - 1.7.1.0 ] - 2024-03-10
+the same as previous - experiments with jitpack
+### Changes
 ## [ 20 - 1.7.0.0 ] - 2024-03-10
 initial version of namespaces
 ### Summary
