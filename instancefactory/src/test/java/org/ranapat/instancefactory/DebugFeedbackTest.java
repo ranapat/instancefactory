@@ -8,13 +8,13 @@ import org.ranapat.instancefactory.tools.TestInstance;
 
 import java.util.Map;
 
-public class InstanceFactoryDebugFeedbackTest {
+public class DebugFeedbackTest {
     private final DebugFeedback debugFeedback;
 
-    public InstanceFactoryDebugFeedbackTest() {
+    public DebugFeedbackTest() {
         debugFeedback = new DebugFeedback() {
             @Override
-            public void attachMap(final Map<String, Object> map) {
+            public void attachNamespaces(final Map<Namespace, Map<String, Object>> namespaces) {
                 //
             }
 
@@ -34,7 +34,12 @@ public class InstanceFactoryDebugFeedbackTest {
             }
 
             @Override
-            public void handleClear() {
+            public void handleClear(final Namespace namespace) {
+                //
+            }
+
+            @Override
+            public void handleClearAll() {
                 //
             }
 
@@ -63,6 +68,8 @@ public class InstanceFactoryDebugFeedbackTest {
         InstanceFactory.get(TestInstance.class);
         InstanceFactory.remove(TestInstance.class);
         InstanceFactory.inject(new InstanceToDynamicallyInitiliseV1());
+        InstanceFactory.clear();
+        InstanceFactory.clearAll();
     }
 
 }
