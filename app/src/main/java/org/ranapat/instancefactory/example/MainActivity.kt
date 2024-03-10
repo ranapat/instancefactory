@@ -1,9 +1,11 @@
 package org.ranapat.instancefactory.example
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import org.ranapat.instancefactory.InstanceFactory
 import org.ranapat.instancefactory.Namespace
+import org.ranapat.instancefactory.Stats
 import org.ranapat.instancefactory.get
 import org.ranapat.instancefactory.inject
 import org.ranapat.instancefactory.lazyGet
@@ -34,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         examplesJ()
         examplesK()
         examplesL()
+
+        val stats = Stats.get()
+        Log.d("org.ranapat.fi.example", "... ${stats.namespace} ${stats.count}, ${stats.freeMemory} ${stats.totalMemory} ${stats.maxMemory}")
     }
 
     private fun examplesA() {
