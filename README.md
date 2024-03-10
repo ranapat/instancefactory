@@ -30,11 +30,11 @@ Easy injection pattern can be seen [here](./app/src/main/java/org/ranapat/instan
 ### Browser all from jitpack
 Access all jitpack builds [here](https://jitpack.io/#ranapat/instancefactory).
 
-### Get it from source
-Check out the repo and have fun.
-
 ### Check the releases
 All releases are available [here](https://github.com/ranapat/instancefactory/tags).
+
+### Get it from source
+Check out the repo and have fun.
 
 ## Requirements
 * Java 11
