@@ -8,7 +8,7 @@ the same as previous - experiments with jitpack
 ## [ 20 - 1.7.0.0 ] - 2024-03-10
 initial version of namespaces
 ### Summary
-https://github.com/ranapat/instancefactory/issues/11
+issue - https://github.com/ranapat/instancefactory/issues/11
 ### Important
 kotlin inject methods now duplicated with get methods
 ### Changes

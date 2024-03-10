@@ -114,6 +114,7 @@ static final Namespace namespaceA = new Namespace() {};
 ClassA classA = InstanceFactory.get(namespaceA, ClassA.class);
 ```
 
+## Complete how-to
 For more check [here](./documentation/examples/index.md).
 
 ## External assets / tools being used in repo
