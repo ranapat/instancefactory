@@ -27,7 +27,7 @@ Easy injection pattern can be seen [here](./app/src/main/java/org/ranapat/instan
 ### Get latest from jitpack
 [![](https://jitpack.io/v/ranapat/instancefactory.svg)](https://jitpack.io/#ranapat/instancefactory)
 
-### Browser older from jitpack
+### Browser all from jitpack
 Access all jitpack builds [here](https://jitpack.io/#ranapat/instancefactory).
 
 ### Get it from source
