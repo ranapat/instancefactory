@@ -2,7 +2,7 @@
 All notable changes to the project will be documented in this file.
 
 ## [ 20 - 1.7.0.0 ] - 2024-03-10
-initial version of namesapces
+initial version of namespaces
 ### Summary
 https://github.com/ranapat/instancefactory/issues/11
 ### Important
