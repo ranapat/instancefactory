@@ -3,6 +3,8 @@ All notable changes to the project will be documented in this file.
 
 ## [ 22 - 1.7.2.0 ] - 2024-03-10
 basic Stats implementation
+### Summary
+issue - https://github.com/ranapat/instancefactory/issues/10
 ### Changes
 - info-fetching
  
