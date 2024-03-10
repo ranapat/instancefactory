@@ -38,4 +38,17 @@ public final class Stats {
                 Runtime.getRuntime().freeMemory()
         );
     }
+
+    public static Stats get(final Namespace namespace) {
+        final Map<String, Object> map = InstanceFactory.namespaces.get(namespace);
+
+        return new Stats(
+                namespace,
+                map != null ? map.size() : 0,
+                map,
+                Runtime.getRuntime().totalMemory(),
+                Runtime.getRuntime().maxMemory(),
+                Runtime.getRuntime().freeMemory()
+        );
+    }
 }
