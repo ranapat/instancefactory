@@ -22,7 +22,7 @@ public final class InstanceFactory {
         debugFeedback = null;
     }
 
-    private static final Map<Namespace, Map<String, Object>> namespaces = Collections.synchronizedMap(new HashMap<Namespace, Map<String, Object>>());
+    static final Map<Namespace, Map<String, Object>> namespaces = Collections.synchronizedMap(new HashMap<Namespace, Map<String, Object>>());
 
     private InstanceFactory() {
         //
