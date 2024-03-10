@@ -24,11 +24,17 @@ Easy injection pattern can be seen [here](./app/src/main/java/org/ranapat/instan
 
 ## How to get it
 
-### Get it from jitpack
+### Get latest from jitpack
 [![](https://jitpack.io/v/ranapat/instancefactory.svg)](https://jitpack.io/#ranapat/instancefactory)
+
+### Browser older from jitpack
+Access older version [here](https://jitpack.io/#ranapat/instancefactory).
 
 ### Get it from source
 Check out the repo and have fun.
+
+### Check the releases
+All releases are available [here](https://github.com/ranapat/instancefactory/tags).
 
 ## Requirements
 * Java 11
