@@ -37,6 +37,31 @@ public class FiTest {
     }
 
     @Test
+    public void gettingUniqueWillNotBeCachedCase1() {
+        final String instance1 = Fi.unique(String.class);
+        final String instance2 = Fi.get(String.class);
+        final String instance3 = Fi.get(String.class);
+
+        assertThat(instance1, is(not(sameInstance(instance2))));
+        assertThat(instance2, is(sameInstance(instance3)));
+    }
+
+    @Test
+    public void gettingUniqueWillNotBeCachedCase2() {
+        final String instance1 = Fi.unique(String.class);
+        final String instance2 = Fi.get(String.class);
+        final String instance3 = Fi.get(String.class);
+        final String instance4 = Fi.get(namespaceA, String.class);
+        final String instance5 = Fi.get(namespaceA, String.class);
+
+        assertThat(instance1, is(not(sameInstance(instance2))));
+        assertThat(instance1, is(not(sameInstance(instance4))));
+        assertThat(instance2, is(not(sameInstance(instance4))));
+        assertThat(instance2, is(sameInstance(instance3)));
+        assertThat(instance4, is(sameInstance(instance5)));
+    }
+
+    @Test
     public void gettingNotPresentInstanceProducesNewInstanceDefaultNamespace() {
         final String instance = Fi.get(String.class);
 

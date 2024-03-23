@@ -5,6 +5,10 @@ public class Fi {
         //
     }
 
+    public static synchronized <T> T unique(final Class<T> _class) {
+        return InstanceFactory.unique(_class);
+    }
+
     public static synchronized <T> T get(final Class<T> _class) {
         return InstanceFactory.get(_class);
     }
