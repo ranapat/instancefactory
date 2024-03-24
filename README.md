@@ -17,6 +17,7 @@ Class(String 'one') != Class(String 'two')
 - setting instances manually that can be reused later
 - runtime clearing of piled up instances for advanced memory management
 - lazy kotlin helpers
+- getting cached as well as fresh / unique instances <img src="./documentation/assets/new.svg" alt="new" width="16" height="16" />
 
 ## Live example
 

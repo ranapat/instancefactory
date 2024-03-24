@@ -33,32 +33,32 @@ val classJ3:ClassJ = get("passed")
 Kotlin explicit
 
 ```kotlin
-val classJ1 = Fi.get(ClassJ)
+val classJ1 = Fi.get(ClassJ::class)
 // or
 val classJ1 = Fi.get(ClassJ::class.java)
 // or
-val classJ1 = InstanceFactory.get(ClassJ)
+val classJ1 = InstanceFactory.get(ClassJ::class)
 ```
 
 Set instance
 
 ```kotlin
 val classA = ClassA()
-InstanceFactory.set(classA, ClassA)
+InstanceFactory.set(classA, ClassA::class)
 // or
 val classA = ClassA()
 InstanceFactory.set(classA, ClassA::class.java)
 // or
 InstanceFactory.set(classA)
 
-val classA1 = InstanceFactory.get(ClassA)
-val classA2 = InstanceFactory.get(ClassA)
+val classA1 = InstanceFactory.get(ClassA::class)
+val classA2 = InstanceFactory.get(ClassA::class)
 ```
 
 Remove instance
 
 ```kotlin
-InstanceFactory.remove(ClassA)
+InstanceFactory.remove(ClassA::class)
 ```
 
 Clear all cached instances

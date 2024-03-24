@@ -8,7 +8,7 @@ Instances of same type within different namespaces will be different unless set 
 Very simple example
 
 ```kotlin
-Fi.get(Class.class) != Fi.get(namespaceA, Class.class) != Fi.get(namespaceB, Class.class) 
+Fi.get(Class.class) != Fi.get(namespaceA, Class::class) != Fi.get(namespaceB, Class::class) 
 ```
 
 To define custom namespace
@@ -44,7 +44,7 @@ Kotlin explicit
 
 ```kotlin
 private val namespaceA: Namespace = object : Namespace() {}
-val classJ1 = InstanceFactory.get(namespaceA, ClassJ)
+val classJ1 = InstanceFactory.get(namespaceA, ClassJ::class)
 ```
 
 Set instance
@@ -52,18 +52,18 @@ Set instance
 ```kotlin
 private val namespaceA: Namespace = object : Namespace() {}
 val classA = ClassA()
-InstanceFactory.set(namespaceA, classA, ClassA)
+InstanceFactory.set(namespaceA, classA, ClassA::class)
 // or
 InstanceFactory.set(classA)
 
-val classA1 = InstanceFactory.get(namespaceA, ClassA)
-val classA2 = InstanceFactory.get(namespaceA, ClassA)
+val classA1 = InstanceFactory.get(namespaceA, ClassA::class)
+val classA2 = InstanceFactory.get(namespaceA, ClassA::class)
 ```
 
 Remove instance
 
 ```kotlin
-InstanceFactory.remove(ClassA)
+InstanceFactory.remove(ClassA::class)
 ```
 
 Clear all cached instances

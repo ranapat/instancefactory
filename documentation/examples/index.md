@@ -10,6 +10,11 @@ Namespace examples are available for
 and
 [Kotlin](./kotlin/namespaces.md)
 
+Unique instance examples are available for
+[Java](./java/unique.md)
+and
+[Kotlin](./kotlin/unique.md)
+
 Stats are available for
 [Java](./java/stats.md)
 and
