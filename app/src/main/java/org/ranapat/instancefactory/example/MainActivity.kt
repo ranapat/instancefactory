@@ -10,6 +10,8 @@ import org.ranapat.instancefactory.get
 import org.ranapat.instancefactory.inject
 import org.ranapat.instancefactory.lazyGet
 import org.ranapat.instancefactory.lazyInject
+import org.ranapat.instancefactory.lazyUnique
+import org.ranapat.instancefactory.unique
 
 class MainActivity : AppCompatActivity() {
     private val namespaceA: Namespace = object : Namespace() {}
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private val classJ5: ClassJ by lazyInject("passedByLazy", ClassJ.ClassJA())
     private val classK5: ClassK by lazyGet("passedByLazy", ClassK.ClassKA())
     private val classL5: ClassL by lazyGet(namespaceA, "passedByLazy", ClassL.ClassLA())
+    private val classM5: ClassM by lazyUnique("passedByLazy", ClassM.ClassMA())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         examplesJ()
         examplesK()
         examplesL()
+        examplesM()
 
         val stats = Stats.get()
         Log.d("org.ranapat.fi.example", "... ${stats.namespace} ${stats.count}, ${stats.freeMemory} ${stats.totalMemory} ${stats.maxMemory}")
@@ -159,5 +163,18 @@ class MainActivity : AppCompatActivity() {
         classL3.test()
         classL4.test()
         classL5.test()
+    }
+
+    private fun examplesM() {
+        val classM1 = unique<ClassM>()
+        val classM2:ClassM = unique()
+        val classM3:ClassM = unique("passed")
+        val classM4:ClassM = unique("passed", ClassM.ClassMA())
+
+        classM1.test()
+        classM2.test()
+        classM3.test()
+        classM4.test()
+        classM5.test()
     }
 }

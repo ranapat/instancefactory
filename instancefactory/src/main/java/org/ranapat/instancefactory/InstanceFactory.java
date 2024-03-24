@@ -68,6 +68,42 @@ public final class InstanceFactory {
         return instance;
     }
 
+    public static <T> T unique(final Class<T> _class) {
+        return unique(_class, new Class[]{});
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T unique(final Class<T> _class, final Class[] types, final Object... values) {
+        T result;
+
+        try {
+            if (_class.isAnnotationPresent(Static.class)) {
+                final Static annotation = _class.getAnnotation(Static.class);
+                final Method method = _class.getDeclaredMethod(annotation.method(), types);
+
+                result = (T) method.invoke(null, values);
+            } else {
+                result = _class.getDeclaredConstructor(types).newInstance(values);
+            }
+
+            if (!_class.isAnnotationPresent(ManualInjectOnly.class)) {
+                inject(result);
+            }
+        } catch (
+                final InstantiationException
+                      | IllegalAccessException
+                      | IllegalArgumentException
+                      | InvocationTargetException
+                      | NoSuchMethodException
+                      | NullPointerException
+                        exception
+        ) {
+            result = null;
+        }
+
+        return result;
+    }
+
     public static synchronized <T> T get(final Class<T> _class) {
         return get(_class, new Class[]{});
     }
@@ -102,34 +138,12 @@ public final class InstanceFactory {
                 debugFeedback.handleGet(key);
             }
         } else {
-            try {
-                if (_class.isAnnotationPresent(Static.class)) {
-                    final Static annotation = _class.getAnnotation(Static.class);
-                    final Method method = _class.getDeclaredMethod(annotation.method(), types);
-
-                    result = (T) method.invoke(null, values);
-                } else {
-                    result = _class.getDeclaredConstructor(types).newInstance(values);
-                }
-
+            result = unique(_class, types, values);
+            if (result != null) {
                 map.put(key, result);
                 if (debugFeedback != null) {
                     debugFeedback.handlePut(key, result);
                 }
-
-                if (!_class.isAnnotationPresent(ManualInjectOnly.class)) {
-                    inject(result);
-                }
-            } catch (
-                    final InstantiationException
-                          | IllegalAccessException
-                          | IllegalArgumentException
-                          | InvocationTargetException
-                          | NoSuchMethodException
-                          | NullPointerException
-                            exception
-            ) {
-                result = null;
             }
         }
 
