@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to the project will be documented in this file.
 
+## [ 23 - 1.7.3.0 ] - 2024-03-24
+unique getter
+### Summary
+issue - https://github.com/ranapat/instancefactory/issues/14
+### Changes
+- unique-getter
+ 
 ## [ 22 - 1.7.2.0 ] - 2024-03-10
 basic Stats implementation
 ### Summary
